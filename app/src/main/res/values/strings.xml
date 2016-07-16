@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ExpenseTracker</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="main_title1">My Expenses Tracker</string>
+    <string name="main_title2">Stored by categories</string>
+    <string name="add_exp_btn">Add a New Expense</string>
+    <string name="view_display_options_btn">View Expense Display Options</string>
+    <string name="store_title">Add an Expense Activity</string>
+
+    <string name="view_by_groceries_btn">Display by Grocery Shopping</string>
+    <string name="view_by_dine_out_btn">Display by Dine Out</string>
+    <string name="view_by_medicine_btn">Display by Medicine</string>
+    <string name="view_by_donations_btn">Display by Donations</string>
+    <string name="view_by_date_btn">Display by Date</string>
+
+    <string name="amount_lbl">Enter Expense Amount:\u0020</string>
+    <string name="category_lbl">Enter Expense Category:\u0020</string>
+    <string name="description_lbl">Enter Expense Description:\u0020</string>
+
+    <string name="clear_button">Clear Entries</string>
+    <string name="store_expense_btn">Store Expense</string>
+
+    <string name="title_activity_store">StoreActivity</string>
+    <string name="title_activity_display_grocery">DisplayByGroceryActivity</string>
+    <string name="title_activity_display_dine_out">DisplayByDineOutActivity</string>
+    <string name="title_activity_display_medicine">DisplayByMedicineActivity</string>
+    <string name="title_activity_display_donations">DisplayByDonationsActivity</string>
+    <string name="title_activity_display_date">DisplayByDateActivity</string>
+
+    <string name="EXPENSE_LIST">EXPENSE_LIST</string>
+    <string name="ROW_NUMBER">ROW_NUMBER</string>
+    <string name="no_expense_prompt">There are no expenses to display!</string>
+    <string name="return_main_button_label">Return to the Main Screen</string>
+    <string name="delete_selected_expenses_button">Delete Checked Expenses</string>
+
+</resources>
