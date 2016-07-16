@@ -10,6 +10,7 @@ public class ExpenseItem implements Parcelable {
 
     // Private member variables
 
+    private int mExpenseID;
     private String mDate;
     private double mExpenseAmount;
     private String mCategory;
@@ -22,8 +23,10 @@ public class ExpenseItem implements Parcelable {
 
     }
 
-    public ExpenseItem(String date, double expenseAmount, String category, String description){
+    public ExpenseItem(int expenseID, String date, double expenseAmount, String category,
+                       String description){
 
+        this.mExpenseID = expenseID;
         this.mDate = date;
         this.mExpenseAmount = expenseAmount;
         this.mCategory = category;
@@ -34,6 +37,14 @@ public class ExpenseItem implements Parcelable {
 
     // Accessor and mutator methods
 
+
+    public int getExpenseID() {
+        return mExpenseID;
+    }
+
+    public void setExpenseID(int expenseID) {
+        mExpenseID = expenseID;
+    }
 
     public String getDate() {
         return mDate;
@@ -83,6 +94,7 @@ public class ExpenseItem implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
+        dest.writeInt(mExpenseID);
         dest.writeString(mDate);
         dest.writeDouble(mExpenseAmount);
         dest.writeString(mCategory);
@@ -92,6 +104,7 @@ public class ExpenseItem implements Parcelable {
 
     private ExpenseItem(Parcel in){
 
+        mExpenseID = in.readInt();
         mDate = in.readString();
         mExpenseAmount = in.readDouble();
         mCategory = in.readString();
