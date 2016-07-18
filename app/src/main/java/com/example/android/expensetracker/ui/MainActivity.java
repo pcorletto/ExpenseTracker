@@ -1,19 +1,141 @@
 package com.example.android.expensetracker.ui;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.android.expensetracker.R;
+import com.example.android.expensetracker.model.ExpenseDbHelper;
+import com.example.android.expensetracker.model.ExpenseItem;
+import com.example.android.expensetracker.model.ExpenseList;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    // Data structures
+
+    private ExpenseItem mExpenseItem;
+    private int mRowNumber;
+    private ExpenseList mExpenseList = new ExpenseList();
+
+    Context context;
+    ExpenseDbHelper expenseDbHelper;
+    SQLiteDatabase sqLiteDatabase;
+    Cursor cursor;
+
+    private Button storeExpenseButton, displayExpenseOptionsButton;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        storeExpenseButton = (Button) findViewById(R.id.displayByDateButton);
+        displayExpenseOptionsButton = (Button) findViewById(R.id.displayExpenseOptionsButton);
+
+        // Retrieve any previous row number stored on the SharedPreferences file
+
+        SharedPreferences sharedPreferences = MainActivity.this
+                .getSharedPreferences(getString(R.string.ET_PREF_FILE), MODE_PRIVATE);
+        mRowNumber = sharedPreferences.getInt(getString(R.string.ROW_NUMBER),0);
+
+        // When the storeExpenseButton is clicked, the StoreActivity is invoked.
+
+        storeExpenseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this, StoreActivity.class);
+                intent.putExtra(getString(R.string.ROW_NUMBER), mRowNumber);
+                startActivity(intent);
+
+            }
+        });
+
+        // Initialize expense item
+
+        mExpenseItem = new ExpenseItem();
+
+        //Initialize ExpenseDbHelper and SQLiteDB
+
+        expenseDbHelper = new ExpenseDbHelper(getApplicationContext());
+        sqLiteDatabase = expenseDbHelper.getReadableDatabase();
+
+        cursor = expenseDbHelper.getExpenseItem(sqLiteDatabase);
+
+        // Initialize the Row Number
+
+        mRowNumber = 0;
+
+        if(cursor.moveToFirst()){
+
+            do{
+
+                int expense_id;
+                String date, category, description;
+                double expense_amount;
+
+                // These correspond to the columns in the expenseDbHelper: expense_id (column 0),
+                // date (col. 1), expense_amount (col. 2), category (col. 3), and description (col. 4)
+
+                // See below:
+
+                /*
+                private static final String CREATE_QUERY = "CREATE TABLE " + ExpenseListDB.NewExpenseItem.TABLE_NAME +
+            "(" + ExpenseListDB.NewExpenseItem.EXPENSE_ID + " INTEGER," +
+            ExpenseListDB.NewExpenseItem.DATE + " TEXT," +
+            ExpenseListDB.NewExpenseItem.EXPENSE_AMOUNT + " REAL," +
+            ExpenseListDB.NewExpenseItem.CATEGORY + " TEXT," +
+            ExpenseListDB.NewExpenseItem.DESCRIPTION + " TEXT);";*/
+
+                expense_id = cursor.getInt(0);
+                date = cursor.getString(1);
+                expense_amount = cursor.getDouble(2);
+                category = cursor.getString(3);
+                description = cursor.getString(4);
+
+                mExpenseItem = new ExpenseItem(expense_id, date, expense_amount, category, description);
+
+                mExpenseList.addExpenseItem(mExpenseItem, mRowNumber);
+
+                mRowNumber++;
+
+            }
+
+            while(cursor.moveToNext());
+
+        }
+
+        displayExpenseOptionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this, DisplayOptionsActivity.class);
+
+                // Next, I will pass in the array of expense items, mExpenseList, an ExpenseList object
+                // to DisplayActivity.java
+
+                intent.putExtra(getString(R.string.ROW_NUMBER), mRowNumber);
+
+                intent.putExtra(getString(R.string.EXPENSE_LIST), mExpenseList.mExpenseItem);
+
+                startActivity(intent);
+
+            }
+
+        });
+
     }
 
 

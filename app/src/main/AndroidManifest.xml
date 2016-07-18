@@ -16,6 +16,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.StoreActivity"
+            android:label="@string/title_activity_store"
+            android:parentActivityName=".ui.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.expensetracker.ui.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.DisplayOptionsActivity"
+            android:label="@string/title_activity_display_options"
+            android:parentActivityName=".ui.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.expensetracker.ui.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.DisplayByDateActivity"
+            android:label="@string/title_activity_display_by_date"
+            android:parentActivityName=".ui.DisplayOptionsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.expensetracker.ui.DisplayOptionsActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/totalRelativeLayout">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainLayout">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout1">
+
+            <TextView
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:text="@string/total_expense_lbl"
+                android:id="@+id/totalExpenseLabel"
+                android:gravity="center_horizontal"
+                android:textColor="@android:color/white"
+                android:background="@android:color/holo_purple"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout2">
+
+            <TextView
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:id="@+id/totalExpenseEditText"
+                android:gravity="center_horizontal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout3">
+
+            <Button
+                android:layout_width="141dp"
+                android:layout_height="wrap_content"
+                android:text="@string/delete_selected_expenses_button"
+                android:id="@+id/deleteSelectedItemsBtn"
+                />
+
+            <Button
+                android:layout_width="134dp"
+                android:layout_height="wrap_content"
+                android:text="@string/return_main_button_label"
+                android:id="@+id/returnToMainBtn"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>
