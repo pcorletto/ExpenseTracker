@@ -33,9 +33,6 @@ public class MainActivity extends ActionBarActivity {
 
     private Button storeExpenseButton, displayExpenseOptionsButton;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,7 +118,15 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(MainActivity.this, DisplayOptionsActivity.class);
+                Intent intent = new Intent(MainActivity.this, DisplayByDateActivity.class);
+
+                // When I fix up Display By Groceries, DisplayByGas, Display By Medicine, etc..
+
+                // Then I will pass the intent from here to DisplayOptionsActivity.class. For now
+
+                // just by-pass it by commenting it out.
+
+                //Intent intent = new Intent(MainActivity.this, DisplayOptionsActivity.class);
 
                 // Next, I will pass in the array of expense items, mExpenseList, an ExpenseList object
                 // to DisplayActivity.java

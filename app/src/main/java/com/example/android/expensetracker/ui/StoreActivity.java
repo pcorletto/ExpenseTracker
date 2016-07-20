@@ -77,11 +77,7 @@ public class StoreActivity extends ActionBarActivity {
 
         cursor = expenseDbHelper.getExpenseItem(sqLiteDatabase);
 
-        // Make the row number equal to the last number stored on the Shared Preferences file
-
-        Intent intent = getIntent();
-
-        mRowNumber = intent.getIntExtra(getString(R.string.ROW_NUMBER), 0) ;
+        mRowNumber = 0;
 
         if(cursor.moveToFirst()){
 
@@ -104,8 +100,7 @@ public class StoreActivity extends ActionBarActivity {
                 VideoListDB.NewVideoItem.AUTHOR + " TEXT," +
                 VideoListDB.NewVideoItem.YEAR + " INTEGER);"; */
 
-                expense_ID = mRowNumber;
-                //expense_ID = cursor.getInt(0);
+                expense_ID = cursor.getInt(0);
                 date = cursor.getString(1);
                 expense_amount = cursor.getDouble(2);
                 category = cursor.getString(3);
@@ -117,15 +112,6 @@ public class StoreActivity extends ActionBarActivity {
 
                 mRowNumber++;
 
-                // Store the new row number on the Shared Preferences file.
-
-                SharedPreferences sharedPreferences = StoreActivity.this
-                        .getSharedPreferences(getString(R.string.ET_PREF_FILE), MODE_PRIVATE);
-
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt(getString(R.string.ROW_NUMBER), mRowNumber);
-                editor.commit();
-
             }
 
             while(cursor.moveToNext());
@@ -136,11 +122,18 @@ public class StoreActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(StoreActivity.this, DisplayOptionsActivity.class);
+                Intent intent = new Intent(StoreActivity.this, DisplayByDateActivity.class);
+
+                // When I fix up Display By Groceries, DisplayByGas, Display By Medicine, etc..
+
+                // Then I will pass the intent from here to DisplayOptionsActivity.class. For now
+
+                // just by-pass it by commenting it out.
+
+                //Intent intent = new Intent(StoreActivity.this, DisplayOptionsActivity.class);
 
                 // Next, I will pass in the array of expense items, mExpenseList, an ExpenseList object
                 // to DisplayOptionsActivity.java
-
 
                 intent.putExtra(getString(R.string.ROW_NUMBER), mRowNumber);
 
@@ -164,7 +157,6 @@ public class StoreActivity extends ActionBarActivity {
         expenseDbHelper = new ExpenseDbHelper(context);
         sqLiteDatabase = expenseDbHelper.getWritableDatabase();
 
-        mExpenseID = mRowNumber;
         mDate = getCurrentDate(); // Get from system's date
         mExpenseAmount = Double.parseDouble(amountEditText.getText().toString());
 
@@ -172,10 +164,30 @@ public class StoreActivity extends ActionBarActivity {
 
         mDescription = descriptionEditText.getText().toString();
 
+        // Before inserting the item, retrieve the last value of mExpenseID, which is stored
+        // in SharedPref file. If there isn't any previous value, assign zero.
+
+        SharedPreferences sharedPreferences = StoreActivity.this
+                .getSharedPreferences(getString(R.string.ET_PREF_FILE), MODE_PRIVATE);
+        mExpenseID = sharedPreferences.getInt(getString(R.string.EXPENSE_ID),0);
+
+        // Add one to expense ID
+
+        mExpenseID = mExpenseID + 1;
+
         // Insert the item details in the database
         expenseDbHelper.addItem(mExpenseID, mDate, mExpenseAmount, mCategory, mDescription, sqLiteDatabase);
 
-        Toast.makeText(StoreActivity.this, "Video Item Saved", Toast.LENGTH_LONG).show();
+        Toast.makeText(StoreActivity.this, "Expense Item # "+ mExpenseID + " Saved", Toast.LENGTH_LONG).show();
+
+        // Store new mExpenseID in SharedPrefs file
+
+        sharedPreferences = StoreActivity.this
+                .getSharedPreferences(getString(R.string.ET_PREF_FILE), MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(getString(R.string.EXPENSE_ID), mExpenseID);
+        editor.commit();
 
         expenseDbHelper.close();
 
@@ -194,7 +206,7 @@ public class StoreActivity extends ActionBarActivity {
 
         String ciMonthDayYear = formattedMonth + "/" + formattedDay
 
-                + "/" + formattedYear;
+                + "/" + formattedYear.substring(2,4);
 
         return ciMonthDayYear;
 
@@ -208,37 +220,37 @@ public class StoreActivity extends ActionBarActivity {
         switch(view.getId()) {
             case R.id.groceryRadioButton:
                 if (checked)
-                    mCategory = String.valueOf(R.string.grocery_radio_btn);
+                    mCategory = getString(R.string.grocery_radio_btn);
                 break;
 
             case R.id.dineoutRadioButton:
                 if (checked)
-                    mCategory = String.valueOf(R.string.dineout_radio_btn);
+                    mCategory = getString(R.string.dineout_radio_btn);
                 break;
 
             case R.id.gasRadioButton:
                 if (checked)
-                    mCategory = String.valueOf(R.string.gas_radio_btn);
+                    mCategory = getString(R.string.gas_radio_btn);
                 break;
 
             case R.id.medicineRadioButton:
                 if (checked)
-                    mCategory = String.valueOf(R.string.medicine_radio_btn);
+                    mCategory = getString(R.string.medicine_radio_btn);
                 break;
 
             case R.id.cosmeticsRadioButton:
                 if (checked)
-                    mCategory = String.valueOf(R.string.cosmetics_radio_btn);
+                    mCategory = getString(R.string.cosmetics_radio_btn);
                 break;
 
             case R.id.donationsRadioButton:
                 if (checked)
-                    mCategory = String.valueOf(R.string.donations_radio_btn);
+                    mCategory = getString(R.string.donations_radio_btn);
                 break;
 
             case R.id.miscRadioButton:
                 if (checked)
-                    mCategory = String.valueOf(R.string.misc_radio_btn);
+                    mCategory = getString(R.string.misc_radio_btn);
                 break;
 
         }

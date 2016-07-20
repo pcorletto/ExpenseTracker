@@ -2,6 +2,7 @@ package com.example.android.expensetracker.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,16 +16,34 @@ public class DisplayOptionsActivity extends ActionBarActivity {
     private Button displayByDateButton, displayByGroceryShoppingButton, displayByDineOutButton,
         displayByMedicineButton, displayByDonationsButton, displayByMiscButton;
 
+    private int mRowNumber;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_options);
+
+        displayByDateButton = (Button) findViewById(R.id.displayByDateButton);
+
+        Intent intent = getIntent();
+
+        mRowNumber = intent.getIntExtra(getString(R.string.ROW_NUMBER), 0);
+
+        final Parcelable[] parcelables = intent.getParcelableArrayExtra(getString(R.string.EXPENSE_LIST));
 
         displayByDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(DisplayOptionsActivity.this, DisplayByDateActivity.class);
+
+                // Next, I will pass in the array of expense items, mExpenseList, an ExpenseList object
+                // to DisplayActivity.java
+
+                intent.putExtra(getString(R.string.ROW_NUMBER), mRowNumber);
+
+                intent.putExtra(getString(R.string.EXPENSE_LIST), parcelables);
+
                 startActivity(intent);
 
             }

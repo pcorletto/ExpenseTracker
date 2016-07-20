@@ -35,10 +35,10 @@
         <activity
             android:name=".ui.DisplayByDateActivity"
             android:label="@string/title_activity_display_by_date"
-            android:parentActivityName=".ui.DisplayOptionsActivity" >
+            android:parentActivityName=".ui.StoreActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.expensetracker.ui.DisplayOptionsActivity" />
+                android:value="com.example.android.expensetracker.ui.StoreActivity" />
         </activity>
     </application>
 

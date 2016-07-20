@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.android.expensetracker.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,7 +90,9 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
 
         // Set the text views for the list view
 
-        holder.amountEditText.setText(holder.expenseAmount + "");
+        DecimalFormat df = new DecimalFormat("$0.00");
+
+        holder.amountEditText.setText(df.format(holder.expenseAmount));
         holder.dateEditText.setText(holder.date);
         holder.categoryEditText.setText(holder.category);
         holder.descriptionEditText.setText(holder.description);

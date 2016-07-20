@@ -35,6 +35,7 @@
     <string name="title_activity_display_donations">DisplayByDonationsActivity</string>
     <string name="title_activity_display_date">DisplayByDateActivity</string>
     <string name="EXPENSE_LIST">EXPENSE_LIST</string>
+    <string name="EXPENSE_ID">EXPENSE_ID</string>
     <string name="ROW_NUMBER">ROW_NUMBER</string>
     <string name="ET_PREF_FILE">ET_PREF_FILE</string>
     <string name="no_expense_prompt">There are no expenses to display!</string>

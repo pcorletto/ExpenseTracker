@@ -27,7 +27,7 @@
                 />
 
             <TextView
-                android:layout_width="45dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:id="@+id/amountEditText"
@@ -35,7 +35,7 @@
                 android:inputType="numberDecimal"/>
 
             <TextView
-                android:layout_width="45dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:id="@+id/dateEditText"
@@ -49,7 +49,7 @@
                 android:inputType="text"/>
 
             <TextView
-                android:layout_width="160dp"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:id="@+id/descriptionEditText"
