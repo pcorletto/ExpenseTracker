@@ -24,7 +24,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/amount_lbl"
-                android:id="@+id/amountTextView"/>
+                android:id="@+id/amountTextView"
+                android:textSize="10sp"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -32,6 +33,98 @@
                 android:id="@+id/amountEditText"
                 android:inputType="numberDecimal"/>
         </LinearLayout>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow>
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/group1">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/grocery_radio_btn"
+                    android:id="@+id/groceryRadioButton"
+                    android:onClick="onRadioButtonClicked"
+                    android:textSize="10sp"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dineout_radio_btn"
+                    android:id="@+id/dineoutRadioButton"
+                    android:onClick="onRadioButtonClicked"
+                    android:textSize="10sp"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gas_radio_btn"
+                    android:id="@+id/gasRadioButton"
+                    android:onClick="onRadioButtonClicked"
+                    android:textSize="10sp"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/medicine_radio_btn"
+                    android:id="@+id/medicineRadioButton"
+                    android:onClick="onRadioButtonClicked"
+                    android:textSize="10sp"/>
+
+
+            </RadioGroup>
+
+            </TableRow>
+
+            <TableRow>
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/group2">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cosmetics_radio_btn"
+                        android:id="@+id/cosmeticsRadioButton"
+                        android:onClick="onRadioButtonClicked"
+                        android:textSize="10sp"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/donations_radio_btn"
+                        android:id="@+id/donationsRadioButton"
+                        android:onClick="onRadioButtonClicked"
+                        android:textSize="10sp"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/misc_radio_btn"
+                        android:id="@+id/miscRadioButton"
+                        android:onClick="onRadioButtonClicked"
+                        android:textSize="10sp"/>
+
+                </RadioGroup>
+
+            </TableRow>
+
+            </TableLayout>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/store_spinner"/>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -44,77 +137,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/description_lbl"
-                android:id="@+id/descriptionTextView"/>
+                android:id="@+id/descriptionTextView"
+                android:textSize="10sp"/>
 
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/descriptionEditText"
                 android:inputType="text"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/layout3"
-            >
-
-            <RadioGroup
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/grocery_radio_btn"
-                    android:id="@+id/groceryRadioButton"
-                    android:onClick="onRadioButtonClicked"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dineout_radio_btn"
-                    android:id="@+id/dineoutRadioButton"
-                    android:onClick="onRadioButtonClicked"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/gas_radio_btn"
-                    android:id="@+id/gasRadioButton"
-                    android:onClick="onRadioButtonClicked"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/medicine_radio_btn"
-                    android:id="@+id/medicineRadioButton"
-                    android:onClick="onRadioButtonClicked"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cosmetics_radio_btn"
-                    android:id="@+id/cosmeticsRadioButton"
-                    android:onClick="onRadioButtonClicked"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/donations_radio_btn"
-                    android:id="@+id/donationsRadioButton"
-                    android:onClick="onRadioButtonClicked"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/misc_radio_btn"
-                    android:id="@+id/miscRadioButton"
-                    android:onClick="onRadioButtonClicked"/>
-
-            </RadioGroup>
-
         </LinearLayout>
 
         <LinearLayout
@@ -130,7 +160,8 @@
                 android:id="@+id/storeButton"
                 android:layout_below="@+id/linearLayout"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"/>
+                android:layout_alignParentStart="true"
+                android:textSize="10sp"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -139,7 +170,8 @@
                 android:id="@+id/clearButton"
                 android:layout_below="@+id/storeButton"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"/>
+                android:layout_alignParentStart="true"
+                android:textSize="10sp"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -150,7 +182,9 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignRight="@+id/storeButton"
-                android:layout_alignEnd="@+id/storeButton"/>
+                android:layout_alignEnd="@+id/storeButton"
+                android:textSize="10sp"/>
+
         </LinearLayout>
 
     </LinearLayout>

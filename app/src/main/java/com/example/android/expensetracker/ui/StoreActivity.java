@@ -5,14 +5,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.android.expensetracker.R;
@@ -41,22 +47,85 @@ public class StoreActivity extends ActionBarActivity {
     SQLiteDatabase sqLiteDatabase;
     Cursor cursor;
 
+    // String array to hold the store names to pick from
+    private String[] storeSelection = {"Walmart","Target", "Walgreens", "CVS", "Publix", "Sedanos"};
+    private Spinner store_spinner;
+
     // Member variables
 
     private int mExpenseID;
     private double mExpenseAmount;
     private String mDate, mCategory, mDescription;
+    private RadioGroup group1, group2;
+
+    private RadioGroup.OnCheckedChangeListener listener1 = new RadioGroup.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+            if(checkedId != -1){
+
+                group2.setOnCheckedChangeListener(null); // remove the listener
+                // before clearing so we don't throw the StackOverflow exception
+
+                group2.clearCheck(); // clear the second RadioGroup!
+
+                group2.setOnCheckedChangeListener(listener2); //reset the listener
+
+            }
+        }
+    };
+
+    private RadioGroup.OnCheckedChangeListener listener2 = new RadioGroup.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+            if(checkedId != -1){
+
+                group1.setOnCheckedChangeListener(null); // remove the listener
+                // before clearing so we don't throw the StackOverflow exception
+
+                group1.clearCheck(); // clear the second RadioGroup!
+
+                group1.setOnCheckedChangeListener(listener1); //reset the listener
+
+
+            }
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store);
+        ArrayAdapter<String> stringArrayAdapter =
+                new ArrayAdapter<String>(this,
+                        android.R.layout.simple_spinner_dropdown_item, storeSelection);
 
         amountEditText = (EditText) findViewById(R.id.amountEditText);
         descriptionEditText = (EditText) findViewById(R.id.descriptionEditText);
         storeButton = (Button) findViewById(R.id.storeButton);
         clearButton = (Button) findViewById(R.id.clearButton);
         displayButton = (Button) findViewById(R.id.displayButton);
+        store_spinner = (Spinner) findViewById(R.id.store_spinner);
+        group1 = (RadioGroup) findViewById(R.id.group1);
+        group2 = (RadioGroup) findViewById(R.id.group2);
+
+        group1.clearCheck(); // this is so we can start fresh, with no selection on both RadioGroups
+        group2.clearCheck();
+
+        // We cannot click the radio buttons from both groups, from both row 1 and row 2 of the
+        // TableLayout. If some radio buttons were already selected from one row, deselect
+        // them so that we can select new ones, on the new row.
+
+        // The following code prevents an infinite loop that could throw a
+        // StackOverFlow exception
+
+
+        group1.setOnCheckedChangeListener(listener1);
+        group2.setOnCheckedChangeListener(listener2);
+
+        store_spinner.setAdapter(stringArrayAdapter);
 
         storeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +186,37 @@ public class StoreActivity extends ActionBarActivity {
             while(cursor.moveToNext());
 
         }
+
+
+        amountEditText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                amountEditText.setTextColor(Color.BLACK);
+                amountEditText.requestFocus();
+                InputMethodManager imm =(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                if(imm != null) {
+                    imm.showSoftInput(amountEditText, 0);
+                }
+                amountEditText.setText("");
+                return true;
+            }
+        });
+
+        descriptionEditText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                descriptionEditText.setTextColor(Color.BLACK);
+                descriptionEditText.requestFocus();
+                InputMethodManager imm =(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                if(imm != null) {
+                    imm.showSoftInput(descriptionEditText, 0);
+                }
+                descriptionEditText.setText("");
+                return true;
+            }
+        });
 
         displayButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -255,8 +355,6 @@ public class StoreActivity extends ActionBarActivity {
 
         }
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

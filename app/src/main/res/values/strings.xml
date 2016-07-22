@@ -8,7 +8,7 @@
     <string name="main_title2">Stored by categories</string>
     <string name="display_options_title2">Displayed by categories</string>
     <string name="add_exp_btn">Add a New Expense</string>
-    <string name="view_display_options_btn">View Expense Display Options</string>
+    <string name="view_display_options_btn">Display</string>
     <string name="store_title">Add an Expense Activity</string>
     <string name="view_by_groceries_btn">Display by Grocery Shopping</string>
     <string name="view_by_dine_out_btn">Display by Dine Out</string>
@@ -25,9 +25,10 @@
     <string name="medicine_radio_btn">Medicine</string>
     <string name="cosmetics_radio_btn">Cosmetics/Personal Hygiene</string>
     <string name="donations_radio_btn">Donations</string>
-    <string name="misc_radio_btn">Miscellaneous/Other</string>
-    <string name="clear_button">Clear Entries</string>
-    <string name="store_expense_btn">Store Expense</string>
+    <string name="misc_radio_btn">Misc./Other</string>
+    <string name="clear_button">Clear</string>
+    <string name="store_expense_btn">Store</string>
+    <string name="pick_store_spinner_lbl">Pick a store</string>
     <string name="title_activity_store">StoreActivity</string>
     <string name="title_activity_display_grocery">DisplayByGroceryActivity</string>
     <string name="title_activity_display_dine_out">DisplayByDineOutActivity</string>
