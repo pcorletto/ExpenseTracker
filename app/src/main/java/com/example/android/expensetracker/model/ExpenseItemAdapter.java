@@ -68,6 +68,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
             holder.amountEditText = (TextView) convertView.findViewById(R.id.amountEditText);
             holder.dateEditText = (TextView) convertView.findViewById(R.id.dateEditText);
             holder.categoryEditText = (TextView) convertView.findViewById(R.id.categoryEditText);
+            holder.storeEditText = (TextView) convertView.findViewById(R.id.storeEditText);
             holder.descriptionEditText = (TextView) convertView.findViewById(R.id.descriptionEditText);
 
             convertView.setTag(holder);
@@ -86,6 +87,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
         holder.expenseAmount = this.getItem(position).getExpenseAmount();
         holder.date = this.getItem(position).getDate();
         holder.category = this.getItem(position).getCategory();
+        holder.pstore = this.getItem(position).getStore();
         holder.description = this.getItem(position).getDescription();
 
         // Set the text views for the list view
@@ -95,6 +97,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
         holder.amountEditText.setText(df.format(holder.expenseAmount));
         holder.dateEditText.setText(holder.date);
         holder.categoryEditText.setText(holder.category);
+        holder.storeEditText.setText(holder.pstore);
         holder.descriptionEditText.setText(holder.description);
 
         holder.checkBox.setFocusable(false);
@@ -127,12 +130,14 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
         double expenseAmount;
         String date;
         String category;
+        String pstore;
         String description;
 
         CheckBox checkBox;
         TextView amountEditText;
         TextView dateEditText;
         TextView categoryEditText;
+        TextView storeEditText;
         TextView descriptionEditText;
 
     }

@@ -80,11 +80,12 @@ public class MainActivity extends ActionBarActivity {
             do{
 
                 int expense_id;
-                String date, category, description;
+                String date, category, mstore, description;
                 double expense_amount;
 
-                // These correspond to the columns in the expenseDbHelper: expense_id (column 0),
-                // date (col. 1), expense_amount (col. 2), category (col. 3), and description (col. 4)
+                // These corresponds to the columns in the videoDbHelper: expense_ID (column 0),
+                // date (col. 1), expense_amount (col. 2), category (col. 3), store (col. 4),
+                // and description (col. 5)
 
                 // See below:
 
@@ -94,15 +95,17 @@ public class MainActivity extends ActionBarActivity {
             ExpenseListDB.NewExpenseItem.DATE + " TEXT," +
             ExpenseListDB.NewExpenseItem.EXPENSE_AMOUNT + " REAL," +
             ExpenseListDB.NewExpenseItem.CATEGORY + " TEXT," +
+            ExpenseListDB.NewExpenseItem.STORE + " TEXT," +
             ExpenseListDB.NewExpenseItem.DESCRIPTION + " TEXT);";*/
 
                 expense_id = cursor.getInt(0);
                 date = cursor.getString(1);
                 expense_amount = cursor.getDouble(2);
                 category = cursor.getString(3);
-                description = cursor.getString(4);
+                mstore = cursor.getString(4);
+                description = cursor.getString(5);
 
-                mExpenseItem = new ExpenseItem(expense_id, date, expense_amount, category, description);
+                mExpenseItem = new ExpenseItem(expense_id, date, expense_amount, category, mstore, description);
 
                 mExpenseList.addExpenseItem(mExpenseItem, mRowNumber);
 

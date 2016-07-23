@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -55,8 +56,11 @@ public class StoreActivity extends ActionBarActivity {
 
     private int mExpenseID;
     private double mExpenseAmount;
-    private String mDate, mCategory, mDescription;
+    private String mDate, mCategory, mStore, mDescription;
     private RadioGroup group1, group2;
+
+    // The following two variables, listener1 and listener 2, will be used in onCreate to
+    // allow only one RadioGroup to be selected at one time.
 
     private RadioGroup.OnCheckedChangeListener listener1 = new RadioGroup.OnCheckedChangeListener() {
         @Override
@@ -127,6 +131,23 @@ public class StoreActivity extends ActionBarActivity {
 
         store_spinner.setAdapter(stringArrayAdapter);
 
+        // Code to extract the store name from the store_spinner and then store it into
+        // the variable mStore, goes here:
+
+        store_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                mStore = store_spinner.getSelectedItem().toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         storeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,11 +174,12 @@ public class StoreActivity extends ActionBarActivity {
             do{
 
                 int expense_ID;
-                String date, category, description;
+                String date, category, mstore, description;
                 double expense_amount;
 
                 // These corresponds to the columns in the videoDbHelper: expense_ID (column 0),
-                // date (col. 1), expense_amount (col. 2), category (col. 3), and description (col. 4)
+                // date (col. 1), expense_amount (col. 2), category (col. 3), store (col. 4),
+                // and description (col. 5)
 
                 // See sample below:
 
@@ -173,9 +195,10 @@ public class StoreActivity extends ActionBarActivity {
                 date = cursor.getString(1);
                 expense_amount = cursor.getDouble(2);
                 category = cursor.getString(3);
-                description = cursor.getString(4);
+                mstore = cursor.getString(4);
+                description = cursor.getString(5);
 
-                mExpenseItem = new ExpenseItem(expense_ID, date, expense_amount, category, description);
+                mExpenseItem = new ExpenseItem(expense_ID, date, expense_amount, category, mstore, description);
 
                 mExpenseList.addExpenseItem(mExpenseItem, mRowNumber);
 
@@ -187,6 +210,8 @@ public class StoreActivity extends ActionBarActivity {
 
         }
 
+        // The following block of code clears the EditText when tapped, if there was already
+        // some user input on it.
 
         amountEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -202,6 +227,9 @@ public class StoreActivity extends ActionBarActivity {
                 return true;
             }
         });
+
+        // The following block of code clears the EditText when tapped, if there was already
+        // some user input on it.
 
         descriptionEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -276,9 +304,10 @@ public class StoreActivity extends ActionBarActivity {
         mExpenseID = mExpenseID + 1;
 
         // Insert the item details in the database
-        expenseDbHelper.addItem(mExpenseID, mDate, mExpenseAmount, mCategory, mDescription, sqLiteDatabase);
+        expenseDbHelper.addItem(mExpenseID, mDate, mExpenseAmount, mCategory, mStore,
+                mDescription, sqLiteDatabase);
 
-        Toast.makeText(StoreActivity.this, "Expense Item # "+ mExpenseID + " Saved", Toast.LENGTH_LONG).show();
+        Toast.makeText(StoreActivity.this, "Expense Item # "+ mExpenseID + " Saved.", Toast.LENGTH_LONG).show();
 
         // Store new mExpenseID in SharedPrefs file
 

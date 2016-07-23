@@ -16,6 +16,7 @@ public class ExpenseListDB {
         public static final String DATE = "date";
         public static final String EXPENSE_AMOUNT = "expense_amount";
         public static final String CATEGORY = "category";
+        public static final String PSTORE = "store";
         public static final String DESCRIPTION = "description";
 
         // Table name

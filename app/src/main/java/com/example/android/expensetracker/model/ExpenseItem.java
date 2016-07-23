@@ -14,6 +14,7 @@ public class ExpenseItem implements Parcelable {
     private String mDate;
     private double mExpenseAmount;
     private String mCategory;
+    private String mStore;
     private String mDescription;
     private boolean isSelected;
 
@@ -24,12 +25,13 @@ public class ExpenseItem implements Parcelable {
     }
 
     public ExpenseItem(int expenseID, String date, double expenseAmount, String category,
-                       String description){
+                       String store, String description){
 
         this.mExpenseID = expenseID;
         this.mDate = date;
         this.mExpenseAmount = expenseAmount;
         this.mCategory = category;
+        this.mStore = store;
         this.mDescription = description;
         this.isSelected = false;
 
@@ -70,6 +72,14 @@ public class ExpenseItem implements Parcelable {
         mCategory = category;
     }
 
+    public String getStore() {
+        return mStore;
+    }
+
+    public void setStore(String store) {
+        mStore = store;
+    }
+
     public String getDescription() {
         return mDescription;
     }
@@ -98,6 +108,7 @@ public class ExpenseItem implements Parcelable {
         dest.writeString(mDate);
         dest.writeDouble(mExpenseAmount);
         dest.writeString(mCategory);
+        dest.writeString(mStore);
         dest.writeString(mDescription);
 
     }
@@ -108,6 +119,7 @@ public class ExpenseItem implements Parcelable {
         mDate = in.readString();
         mExpenseAmount = in.readDouble();
         mCategory = in.readString();
+        mStore = in.readString();
         mDescription = in.readString();
 
     }
