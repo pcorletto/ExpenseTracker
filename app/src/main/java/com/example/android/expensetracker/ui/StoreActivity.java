@@ -6,8 +6,11 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -17,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -26,7 +30,9 @@ import com.example.android.expensetracker.R;
 import com.example.android.expensetracker.model.ExpenseDbHelper;
 import com.example.android.expensetracker.model.ExpenseItem;
 import com.example.android.expensetracker.model.ExpenseList;
+import com.example.android.expensetracker.model.UserPicture;
 
+import java.io.IOException;
 import java.util.Calendar;
 
 public class StoreActivity extends ActionBarActivity {
@@ -67,6 +73,18 @@ public class StoreActivity extends ActionBarActivity {
     private double mExpenseAmount;
     private String mDate, mCategory, mStore, mDescription;
     private RadioGroup group1, group2;
+
+    // The following code is for the Gallery Image picker
+
+    // this is the action code we use in our intent,
+    // this way we know we're looking at the response from our own action
+    private static final int SELECT_SINGLE_PICTURE = 101;
+
+    private static final int SELECT_MULTIPLE_PICTURE = 201;
+
+    public static final String IMAGE_TYPE = "image/*";
+
+    private ImageView selectedImagePreview;
 
     // The following two variables, listener1 and listener 2, will be used in onCreate to
     // allow only one RadioGroup to be selected at one time.
@@ -281,6 +299,27 @@ public class StoreActivity extends ActionBarActivity {
             }
         });
 
+        // The following code is for the button to get images from the Gallery
+
+        // no need to cast to button view here since we can add a listener to any view, this
+        // is the single image selection
+
+        findViewById(R.id.getReceiptPicButton).setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View arg0) {
+
+                // in onCreate or any event where your want the user to
+                // select a file
+                Intent intent = new Intent();
+                intent.setType(IMAGE_TYPE);
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent,
+                        getString(R.string.select_picture)), SELECT_SINGLE_PICTURE);
+            }
+        });
+
+        selectedImagePreview = (ImageView)findViewById(R.id.image_preview);
+
     }
 
     public void addItem(View view) {
@@ -393,6 +432,61 @@ public class StoreActivity extends ActionBarActivity {
 
         }
     }
+
+    // The following sections of code are for the Gallery image picker
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_SINGLE_PICTURE) {
+
+                Uri selectedImageUri = data.getData();
+                try {
+                    selectedImagePreview.setImageBitmap(new UserPicture(selectedImageUri, getContentResolver()).getBitmap());
+                } catch (IOException e) {
+                    Log.e(MainActivity.class.getSimpleName(), "Failed to load image", e);
+                }
+                // original code
+//                String selectedImagePath = getPath(selectedImageUri);
+//                selectedImagePreview.setImageURI(selectedImageUri);
+            }
+
+        } else {
+            // report failure
+            Toast.makeText(getApplicationContext(), R.string.msg_failed_to_get_intent_data, Toast.LENGTH_LONG).show();
+            Log.d(MainActivity.class.getSimpleName(), "Failed to get intent data, result code is " + resultCode);
+        }
+    }
+
+    /**
+     * helper to retrieve the path of an image URI
+     */
+    public String getPath(Uri uri) {
+
+        // just some safety built in
+        if( uri == null ) {
+            // perform some logging or show user feedback
+            Toast.makeText(getApplicationContext(), R.string.msg_failed_to_get_picture, Toast.LENGTH_LONG).show();
+            Log.d(MainActivity.class.getSimpleName(), "Failed to parse image path from image URI " + uri);
+            return null;
+        }
+
+        // try to retrieve the image from the media store first
+        // this will only work for images selected from gallery
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        if( cursor != null ){
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
+        // this is our fallback here, thanks to the answer from @mad indicating this is needed for
+        // working code based on images selected using other file managers
+        return uri.getPath();
+
+    }
+
+    // The Gallery image picker helper code ends here.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
