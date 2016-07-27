@@ -17,6 +17,11 @@
             android:id="@+id/layout1">
 
             <TextView
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/fillerView1"/>
+
+            <TextView
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:text="@string/total_expense_lbl"
@@ -32,6 +37,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/layout2">
+
+            <TextView
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/fillerView2"/>
 
             <TextView
                 android:layout_width="70dp"

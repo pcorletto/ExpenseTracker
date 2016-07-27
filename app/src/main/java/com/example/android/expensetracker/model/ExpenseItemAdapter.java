@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.android.expensetracker.R;
@@ -27,7 +29,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
     private Context mContext;
 
     public ExpenseItemAdapter(Context context, List<ExpenseItem> list) {
-        super(context, R.layout.expense_list_item, list);
+        super(context, R.layout.expense_list_item_expanded, list);
         this.mContext = context;
         this.list = list;
 
@@ -61,14 +63,18 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
 
         if(convertView == null){
             //brand new
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.expense_list_item, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.expense_list_item_expanded, null);
 
             holder = new ViewHolder();
             holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkBox);
             holder.amountEditText = (TextView) convertView.findViewById(R.id.amountEditText);
             holder.dateEditText = (TextView) convertView.findViewById(R.id.dateEditText);
-            holder.categoryEditText = (TextView) convertView.findViewById(R.id.categoryEditText);
+            holder.expandItemButton = (Button) convertView.findViewById(R.id.expandItemButton);
             holder.storeEditText = (TextView) convertView.findViewById(R.id.storeEditText);
+
+            holder.layout2 = (LinearLayout) convertView.findViewById(R.id.layout2);
+
+            holder.categoryEditText = (TextView) convertView.findViewById(R.id.categoryEditText);
             holder.descriptionEditText = (TextView) convertView.findViewById(R.id.descriptionEditText);
 
             convertView.setTag(holder);
@@ -100,6 +106,8 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
         holder.storeEditText.setText(holder.pstore);
         holder.descriptionEditText.setText(holder.description);
 
+        holder.layout2.setVisibility(View.INVISIBLE);
+
         holder.checkBox.setFocusable(false);
         holder.checkBox.setChecked(positionArray.get(position));
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -122,6 +130,27 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
             }
         });
 
+        holder.expandItemButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // When clicked, hide or un-hide the category and the description details
+
+                if(holder.layout2.getVisibility()==View.VISIBLE){
+
+                    holder.layout2.setVisibility(View.INVISIBLE);
+
+                }
+
+                else {
+
+                    holder.layout2.setVisibility(View.VISIBLE);
+
+                }
+
+            }
+        });
+
         return convertView;
     }
 
@@ -129,16 +158,19 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
 
         double expenseAmount;
         String date;
-        String category;
         String pstore;
+        String category;
         String description;
 
         CheckBox checkBox;
         TextView amountEditText;
         TextView dateEditText;
-        TextView categoryEditText;
+        Button expandItemButton;
         TextView storeEditText;
+        TextView categoryEditText;
         TextView descriptionEditText;
+
+        LinearLayout layout2;
 
     }
 

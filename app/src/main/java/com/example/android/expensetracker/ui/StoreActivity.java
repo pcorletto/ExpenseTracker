@@ -49,7 +49,16 @@ public class StoreActivity extends ActionBarActivity {
     Cursor cursor;
 
     // String array to hold the store names to pick from
-    private String[] storeSelection = {"Walmart","Target", "Walgreens", "CVS", "Publix", "Sedanos"};
+    private String[] storeSelection = {"Walmart","Sedanos", "Publix", "Tropical", "Aldi",
+            "Winn Dixie", "BJ Wholesale Club", "Dollar Tree", "Dee Dee Discount",
+            "CVS", "Walgreens", "Rite Aid", "McDonalds", "Burger King", "Wendys", "Subways",
+            "Pollo Tropical", "City of Homestead", "Metro PCS", "Molina Health Care", "Wells Fargo",
+            "Suntrust", "MoneyGram", "Church", "Badcock Furniture", "Brandsmart",
+            "Current Landlord", "Office Max", "RaceTrac", "Shell", "Sun Pass", "Mechanic",
+            "GEICO Insurance", "Vehicle Registration", "ASEA", "Gano Excel", "Shipping Company",
+            "Jet Blue", "Spirit Airlines", "Mechanic", "AutoZone", "Amazon", "Public Bus or Train Fare",
+            "Children School Expense", "Teacher Expense", "Beauty Salon", "Barber", "Flat/Tire Repair"};
+
     private Spinner store_spinner;
 
     // Member variables
