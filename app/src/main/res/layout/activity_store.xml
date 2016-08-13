@@ -172,13 +172,6 @@
             android:id="@+id/getReceiptPicButton"
             android:textSize="12sp"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/store_receipt_pic_btn"
-            android:id="@+id/storeReceiptPicButton"
-            android:textSize="12sp"/>
-
     </LinearLayout>
 
     <ImageView

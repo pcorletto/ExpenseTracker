@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +34,7 @@ import com.example.android.expensetracker.model.ExpenseItem;
 import com.example.android.expensetracker.model.ExpenseList;
 import com.example.android.expensetracker.model.UserPicture;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 
@@ -56,11 +59,11 @@ public class StoreActivity extends ActionBarActivity {
 
     // String array to hold the store names to pick from
     private String[] storeSelection = {"Walmart","Sedanos", "Publix", "Tropical", "Aldi",
-            "Winn Dixie", "BJ Wholesale Club", "Dollar Tree", "Dee Dee Discount",
+            "Winn Dixie", "BJ Wholesale Club", "Other Supermarket", "Dollar Tree", "Dee Dee Discount",
             "CVS", "Walgreens", "Rite Aid", "McDonalds", "Burger King", "Wendys", "Subways",
-            "Pollo Tropical", "City of Homestead", "Metro PCS", "Molina Health Care", "Wells Fargo",
+            "Pollo Tropical", "Other Restaurant", "City of Homestead", "Metro PCS", "Molina Health Care", "Wells Fargo",
             "Suntrust", "MoneyGram", "Church", "Badcock Furniture", "Brandsmart",
-            "Current Landlord", "Office Max", "RaceTrac", "Shell", "Sun Pass", "Mechanic",
+            "Current Landlord", "Office Max", "RaceTrac", "Shell", "Other Gas Station", "Sun Pass", "Mechanic",
             "GEICO Insurance", "Vehicle Registration", "ASEA", "Gano Excel", "Shipping Company",
             "Jet Blue", "Spirit Airlines", "Mechanic", "AutoZone", "Amazon", "Public Bus or Train Fare",
             "Children School Expense", "Teacher Expense", "Beauty Salon", "Barber", "Flat/Tire Repair"};
@@ -70,7 +73,7 @@ public class StoreActivity extends ActionBarActivity {
     // Member variables
 
     private int mExpenseID;
-    private double mExpenseAmount;
+    public double mExpenseAmount;
     private String mDate, mCategory, mStore, mDescription;
     private RadioGroup group1, group2;
 
@@ -85,6 +88,8 @@ public class StoreActivity extends ActionBarActivity {
     public static final String IMAGE_TYPE = "image/*";
 
     private ImageView selectedImagePreview;
+
+    private String imageConvertedToString;
 
     // The following two variables, listener1 and listener 2, will be used in onCreate to
     // allow only one RadioGroup to be selected at one time.
@@ -360,6 +365,7 @@ public class StoreActivity extends ActionBarActivity {
         sqLiteDatabase = expenseDbHelper.getWritableDatabase();
 
         mDate = getCurrentDate(); // Get from system's date
+
         mExpenseAmount = Double.parseDouble(amountEditText.getText().toString());
 
         //mCategory = ""; // get category from Radio button
@@ -468,6 +474,13 @@ public class StoreActivity extends ActionBarActivity {
                 Uri selectedImageUri = data.getData();
                 try {
                     selectedImagePreview.setImageBitmap(new UserPicture(selectedImageUri, getContentResolver()).getBitmap());
+
+                    Bitmap bm = new UserPicture(selectedImageUri, getContentResolver()).getBitmap();
+
+                    imageConvertedToString = convertToBase64(bm);
+
+                    Toast.makeText(StoreActivity.this, imageConvertedToString, Toast.LENGTH_LONG).show();
+
                 } catch (IOException e) {
                     Log.e(MainActivity.class.getSimpleName(), "Failed to load image", e);
                 }
@@ -534,5 +547,12 @@ public class StoreActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public String convertToBase64(Bitmap bitmap) {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100,os);
+        byte[] byteArray = os.toByteArray();
+        return Base64.encodeToString(byteArray, 0);
     }
 }
