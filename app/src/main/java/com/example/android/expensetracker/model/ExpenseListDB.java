@@ -18,6 +18,7 @@ public class ExpenseListDB {
         public static final String CATEGORY = "category";
         public static final String PSTORE = "store";
         public static final String DESCRIPTION = "description";
+        public static final String RECEIPT_PIC_STRING ="receipt_pic_string";
 
         // Table name
 

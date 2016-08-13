@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.expensetracker.R;
 
@@ -70,6 +71,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
             holder.amountEditText = (TextView) convertView.findViewById(R.id.amountEditText);
             holder.dateEditText = (TextView) convertView.findViewById(R.id.dateEditText);
             holder.expandItemButton = (Button) convertView.findViewById(R.id.expandItemButton);
+            holder.displayReceiptButton = (Button) convertView.findViewById(R.id.displayReceiptButton);
             holder.storeEditText = (TextView) convertView.findViewById(R.id.storeEditText);
 
             holder.layout2 = (LinearLayout) convertView.findViewById(R.id.layout2);
@@ -95,6 +97,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
         holder.category = this.getItem(position).getCategory();
         holder.pstore = this.getItem(position).getStore();
         holder.description = this.getItem(position).getDescription();
+        holder.receiptPicString = this.getItem(position).getReceiptPicString();
 
         // Set the text views for the list view
 
@@ -151,6 +154,16 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
             }
         });
 
+        holder.displayReceiptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(getContext(), holder.receiptPicString, Toast.LENGTH_LONG).show();
+
+
+            }
+        });
+
         return convertView;
     }
 
@@ -161,11 +174,12 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
         String pstore;
         String category;
         String description;
+        String receiptPicString;
 
         CheckBox checkBox;
         TextView amountEditText;
         TextView dateEditText;
-        Button expandItemButton;
+        Button expandItemButton, displayReceiptButton;
         TextView storeEditText;
         TextView categoryEditText;
         TextView descriptionEditText;

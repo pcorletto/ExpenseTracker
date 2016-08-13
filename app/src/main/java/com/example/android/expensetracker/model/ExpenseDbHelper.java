@@ -21,7 +21,8 @@ public class ExpenseDbHelper extends SQLiteOpenHelper {
             ExpenseListDB.NewExpenseItem.EXPENSE_AMOUNT + " REAL," +
             ExpenseListDB.NewExpenseItem.CATEGORY + " TEXT," +
             ExpenseListDB.NewExpenseItem.PSTORE + " TEXT," +
-            ExpenseListDB.NewExpenseItem.DESCRIPTION + " TEXT);";
+            ExpenseListDB.NewExpenseItem.DESCRIPTION + " TEXT," +
+            ExpenseListDB.NewExpenseItem.RECEIPT_PIC_STRING + " TEXT);";
 
     // Default Constructor:
 
@@ -43,7 +44,7 @@ public class ExpenseDbHelper extends SQLiteOpenHelper {
     // Insert the item next. Method for inserting the expense item.
 
     public void addItem(int expenseID, String date, double expenseAmount, String category,
-            String store, String description, SQLiteDatabase db){
+            String store, String description, String receipt_pic_string, SQLiteDatabase db){
 
         // Map key-values
 
@@ -54,6 +55,7 @@ public class ExpenseDbHelper extends SQLiteOpenHelper {
         contentValues.put(ExpenseListDB.NewExpenseItem.CATEGORY, category);
         contentValues.put(ExpenseListDB.NewExpenseItem.PSTORE, store);
         contentValues.put(ExpenseListDB.NewExpenseItem.DESCRIPTION, description);
+        contentValues.put(ExpenseListDB.NewExpenseItem.RECEIPT_PIC_STRING, receipt_pic_string);
 
         // Save all these into the database
 
@@ -76,7 +78,8 @@ public class ExpenseDbHelper extends SQLiteOpenHelper {
                 ExpenseListDB.NewExpenseItem.EXPENSE_AMOUNT,
                 ExpenseListDB.NewExpenseItem.CATEGORY,
                 ExpenseListDB.NewExpenseItem.PSTORE,
-                ExpenseListDB.NewExpenseItem.DESCRIPTION};
+                ExpenseListDB.NewExpenseItem.DESCRIPTION,
+                ExpenseListDB.NewExpenseItem.RECEIPT_PIC_STRING};
 
         // We only need the table name and projection parameters. No conditions will be specified,
         // so, we will pass in null for the last five parameters.

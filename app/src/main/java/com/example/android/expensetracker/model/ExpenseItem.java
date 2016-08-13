@@ -16,6 +16,7 @@ public class ExpenseItem implements Parcelable {
     private String mCategory;
     private String mStore;
     private String mDescription;
+    private String mReceiptPicString;
     private boolean isSelected;
 
     // Constructors
@@ -25,7 +26,7 @@ public class ExpenseItem implements Parcelable {
     }
 
     public ExpenseItem(int expenseID, String date, double expenseAmount, String category,
-                       String store, String description){
+                       String store, String description, String receiptPicString){
 
         this.mExpenseID = expenseID;
         this.mDate = date;
@@ -33,6 +34,7 @@ public class ExpenseItem implements Parcelable {
         this.mCategory = category;
         this.mStore = store;
         this.mDescription = description;
+        this.mReceiptPicString = receiptPicString;
         this.isSelected = false;
 
     }
@@ -88,6 +90,14 @@ public class ExpenseItem implements Parcelable {
         mDescription = description;
     }
 
+    public String getReceiptPicString() {
+        return mReceiptPicString;
+    }
+
+    public void setReceiptPicString(String receiptPicString) {
+        mReceiptPicString = receiptPicString;
+    }
+
     public boolean isSelected() {
         return isSelected;
     }
@@ -110,6 +120,7 @@ public class ExpenseItem implements Parcelable {
         dest.writeString(mCategory);
         dest.writeString(mStore);
         dest.writeString(mDescription);
+        dest.writeString(mReceiptPicString);
 
     }
 
@@ -121,6 +132,7 @@ public class ExpenseItem implements Parcelable {
         mCategory = in.readString();
         mStore = in.readString();
         mDescription = in.readString();
+        mReceiptPicString = in.readString();
 
     }
 

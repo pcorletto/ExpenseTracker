@@ -206,7 +206,7 @@ public class StoreActivity extends ActionBarActivity {
             do{
 
                 int expense_ID;
-                String date, category, mstore, description;
+                String date, category, mstore, description, receipt_pic_string;
                 double expense_amount;
 
                 // These corresponds to the columns in the videoDbHelper: expense_ID (column 0),
@@ -229,8 +229,10 @@ public class StoreActivity extends ActionBarActivity {
                 category = cursor.getString(3);
                 mstore = cursor.getString(4);
                 description = cursor.getString(5);
+                receipt_pic_string = cursor.getString(6);
 
-                mExpenseItem = new ExpenseItem(expense_ID, date, expense_amount, category, mstore, description);
+                mExpenseItem = new ExpenseItem(expense_ID, date, expense_amount, category,
+                        mstore, description, receipt_pic_string);
 
                 mExpenseList.addExpenseItem(mExpenseItem, mRowNumber);
 
@@ -385,7 +387,7 @@ public class StoreActivity extends ActionBarActivity {
 
         // Insert the item details in the database
         expenseDbHelper.addItem(mExpenseID, mDate, mExpenseAmount, mCategory, mStore,
-                mDescription, sqLiteDatabase);
+                mDescription, imageConvertedToString, sqLiteDatabase);
 
         Toast.makeText(StoreActivity.this, "Expense Item # "+ mExpenseID + " Saved.", Toast.LENGTH_LONG).show();
 
@@ -478,8 +480,6 @@ public class StoreActivity extends ActionBarActivity {
                     Bitmap bm = new UserPicture(selectedImageUri, getContentResolver()).getBitmap();
 
                     imageConvertedToString = convertToBase64(bm);
-
-                    Toast.makeText(StoreActivity.this, imageConvertedToString, Toast.LENGTH_LONG).show();
 
                 } catch (IOException e) {
                     Log.e(MainActivity.class.getSimpleName(), "Failed to load image", e);
