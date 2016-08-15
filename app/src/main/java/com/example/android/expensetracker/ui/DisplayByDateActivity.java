@@ -168,9 +168,7 @@ public class DisplayByDateActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(DisplayByDateActivity.this, MainActivity.class);
-
-                startActivity(intent);
+                finish();
 
             }
 

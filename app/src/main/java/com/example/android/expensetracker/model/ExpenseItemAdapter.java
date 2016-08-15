@@ -1,6 +1,7 @@
 package com.example.android.expensetracker.model;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.expensetracker.R;
+import com.example.android.expensetracker.ui.DisplayReceiptActivity;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -158,8 +159,10 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getContext(), holder.receiptPicString, Toast.LENGTH_LONG).show();
-
+                Intent intent = new Intent(getContext(), DisplayReceiptActivity.class);
+                intent.putExtra(getContext().getString(R.string.RECEIPT_PIC_STRING),
+                        holder.receiptPicString);
+                getContext().startActivity(intent);
 
             }
         });

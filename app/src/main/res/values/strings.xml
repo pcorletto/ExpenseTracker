@@ -39,6 +39,7 @@
     <string name="EXPENSE_ID">EXPENSE_ID</string>
     <string name="ROW_NUMBER">ROW_NUMBER</string>
     <string name="ET_PREF_FILE">ET_PREF_FILE</string>
+    <string name="RECEIPT_PIC_STRING">RECEIPT_PIC_STRING</string>
     <string name="no_expense_prompt">There are no expenses to display!</string>
     <string name="return_main_button_label">Return to the Main Screen</string>
     <string name="delete_selected_expenses_button">Delete Checked Expenses</string>
@@ -54,5 +55,7 @@
     <string name="start_camera_btn">camera</string>
     <string name="get_receipt_pic_btn">img gallery</string>
     <string name="store_receipt_pic_btn">insert pic</string>
+    <string name="title_activity_display_receipt">DisplayReceiptActivity</string>
+    <string name="return_previous_lbl">Return to Previous Screen</string>
 
 </resources>
