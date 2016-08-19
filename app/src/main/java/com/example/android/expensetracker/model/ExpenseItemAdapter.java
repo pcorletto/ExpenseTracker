@@ -98,7 +98,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
         holder.category = this.getItem(position).getCategory();
         holder.pstore = this.getItem(position).getStore();
         holder.description = this.getItem(position).getDescription();
-        holder.receiptPicString = this.getItem(position).getReceiptPicString();
+        holder.receiptNumber = this.getItem(position).getReceiptNumber();
 
         // Set the text views for the list view
 
@@ -160,8 +160,8 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
             public void onClick(View v) {
 
                 Intent intent = new Intent(getContext(), DisplayReceiptActivity.class);
-                intent.putExtra(getContext().getString(R.string.RECEIPT_PIC_STRING),
-                        holder.receiptPicString);
+                intent.putExtra(getContext().getString(R.string.RECEIPT_NUMBER),
+                        holder.receiptNumber);
                 getContext().startActivity(intent);
 
             }
@@ -177,7 +177,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
         String pstore;
         String category;
         String description;
-        String receiptPicString;
+        String receiptNumber;
 
         CheckBox checkBox;
         TextView amountEditText;

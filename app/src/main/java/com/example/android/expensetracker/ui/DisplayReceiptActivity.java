@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +21,7 @@ public class DisplayReceiptActivity extends ActionBarActivity {
     private ImageView receiptImageView;
     private Button returnPreviousBtn, returnMainBtn;
     private Bitmap bm;
-    private String receiptPicString;
+    private String receiptNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,19 +32,15 @@ public class DisplayReceiptActivity extends ActionBarActivity {
         returnPreviousBtn = (Button) findViewById(R.id.returnPreviousBtn);
         returnMainBtn = (Button) findViewById(R.id.returnMainBtn);
 
-        // Get the receipt image string passed via Intent
+        // Get the receipt number passed via Intent
 
         Intent intent = getIntent();
 
-        receiptPicString = intent.getStringExtra(getString(R.string.RECEIPT_PIC_STRING));
+        receiptNumber = intent.getStringExtra(getString(R.string.RECEIPT_NUMBER));
 
-        // Convert this string into a BitMap image
+        bm = getImageBitmap(this, "PICTURE"+receiptNumber, "BMP");
 
-        //bm = convertToBitmap(receiptPicString);
-
-        bm = getImageBitmap(this, "PICTURE001", "BMP");
-
-        // Set the ImageView image to this converted bitmap
+        // Set the ImageView image to the receipt image pulled from internal storage
 
         receiptImageView.setImageBitmap(bm);
 
@@ -67,12 +62,6 @@ public class DisplayReceiptActivity extends ActionBarActivity {
             }
         });
 
-    }
-
-    public Bitmap convertToBitmap(String base64String) {
-        byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
-        Bitmap bitmapResult = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        return bitmapResult;
     }
 
     public Bitmap getImageBitmap(Context context,String name,String extension){

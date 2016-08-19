@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,7 +33,6 @@ import com.example.android.expensetracker.model.ExpenseItem;
 import com.example.android.expensetracker.model.ExpenseList;
 import com.example.android.expensetracker.model.UserPicture;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
@@ -90,7 +88,7 @@ public class StoreActivity extends ActionBarActivity {
 
     private ImageView selectedImagePreview;
 
-    private String imageConvertedToString;
+    private String receiptNumber;
 
     // The following two variables, listener1 and listener 2, will be used in onCreate to
     // allow only one RadioGroup to be selected at one time.
@@ -386,9 +384,11 @@ public class StoreActivity extends ActionBarActivity {
 
         mExpenseID = mExpenseID + 1;
 
+        receiptNumber = mExpenseID + "";
+
         // Insert the item details in the database
         expenseDbHelper.addItem(mExpenseID, mDate, mExpenseAmount, mCategory, mStore,
-                mDescription, imageConvertedToString, sqLiteDatabase);
+                mDescription, receiptNumber, sqLiteDatabase);
 
         Toast.makeText(StoreActivity.this, "Expense Item # "+ mExpenseID + " Saved.", Toast.LENGTH_LONG).show();
 
@@ -480,15 +480,12 @@ public class StoreActivity extends ActionBarActivity {
 
                     Bitmap bm = new UserPicture(selectedImageUri, getContentResolver()).getBitmap();
 
-                    saveImage(this, bm, "PICTURE001", "BMP");
-
-                    //imageConvertedToString = convertToBase64(bm);
-
-                    imageConvertedToString = "abc";
+                    saveImage(this, bm, "PICTURE" + (mRowNumber + 1), "BMP");
 
                 } catch (IOException e) {
                     Log.e(MainActivity.class.getSimpleName(), "Failed to load image", e);
                 }
+
                 // original code
 //                String selectedImagePath = getPath(selectedImageUri);
 //                selectedImagePreview.setImageURI(selectedImageUri);
@@ -566,10 +563,4 @@ public class StoreActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public String convertToBase64(Bitmap bitmap) {
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100,os);
-        byte[] byteArray = os.toByteArray();
-        return Base64.encodeToString(byteArray, 0);
-    }
 }
