@@ -35,6 +35,7 @@ import com.example.android.expensetracker.model.ExpenseList;
 import com.example.android.expensetracker.model.UserPicture;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 
@@ -479,7 +480,11 @@ public class StoreActivity extends ActionBarActivity {
 
                     Bitmap bm = new UserPicture(selectedImageUri, getContentResolver()).getBitmap();
 
-                    imageConvertedToString = convertToBase64(bm);
+                    saveImage(this, bm, "PICTURE001", "BMP");
+
+                    //imageConvertedToString = convertToBase64(bm);
+
+                    imageConvertedToString = "abc";
 
                 } catch (IOException e) {
                     Log.e(MainActivity.class.getSimpleName(), "Failed to load image", e);
@@ -527,6 +532,17 @@ public class StoreActivity extends ActionBarActivity {
 
     // The Gallery image picker helper code ends here.
 
+    public void saveImage(Context context, Bitmap b,String name,String extension){
+        name=name+"."+extension;
+        FileOutputStream out;
+        try {
+            out = context.openFileOutput(name, Context.MODE_PRIVATE);
+            b.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

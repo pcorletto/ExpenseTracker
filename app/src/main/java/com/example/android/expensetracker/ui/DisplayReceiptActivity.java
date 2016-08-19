@@ -1,5 +1,6 @@
 package com.example.android.expensetracker.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +14,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.android.expensetracker.R;
+
+import java.io.FileInputStream;
 
 public class DisplayReceiptActivity extends ActionBarActivity {
 
@@ -38,7 +41,9 @@ public class DisplayReceiptActivity extends ActionBarActivity {
 
         // Convert this string into a BitMap image
 
-        bm = convertToBitmap(receiptPicString);
+        //bm = convertToBitmap(receiptPicString);
+
+        bm = getImageBitmap(this, "PICTURE001", "BMP");
 
         // Set the ImageView image to this converted bitmap
 
@@ -68,6 +73,19 @@ public class DisplayReceiptActivity extends ActionBarActivity {
         byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
         Bitmap bitmapResult = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         return bitmapResult;
+    }
+
+    public Bitmap getImageBitmap(Context context,String name,String extension){
+        name=name+"."+extension;
+        try{
+            FileInputStream fis = context.openFileInput(name);
+            Bitmap b = BitmapFactory.decodeStream(fis);
+            fis.close();
+            return b;
+        }
+        catch(Exception e){
+        }
+        return null;
     }
 
 
