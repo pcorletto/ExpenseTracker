@@ -2,6 +2,7 @@ package com.example.android.expensetracker.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -12,12 +13,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.expensetracker.R;
 import com.example.android.expensetracker.model.ExpenseDbHelper;
 import com.example.android.expensetracker.model.ExpenseItem;
 import com.example.android.expensetracker.model.ExpenseItemAdapter;
+import com.example.android.expensetracker.model.ExpenseList;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -42,6 +43,9 @@ public class DisplayByDateActivity extends AppCompatActivity {
 
     private double totalExpense;
 
+    private ExpenseItem mExpenseItem;
+    private ExpenseList mExpenseList = new ExpenseList();
+    Cursor cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,9 +138,9 @@ public class DisplayByDateActivity extends AppCompatActivity {
 
                         sqLiteDatabase = expenseDbHelper.getReadableDatabase();
 
-                        expenseDbHelper.deleteExpenseItem(item_for_DB_deletion, sqLiteDatabase);
+                        // Delete the expense item from the SQLite database
 
-                        Toast.makeText(getApplicationContext(), "Expense item deleted", Toast.LENGTH_LONG).show();
+                        expenseDbHelper.deleteExpenseItem(item_for_DB_deletion, sqLiteDatabase);
 
 
                     } else {
@@ -146,6 +150,7 @@ public class DisplayByDateActivity extends AppCompatActivity {
                         newList.add(list.get(i));
 
                     }
+
 
                 }
 
@@ -186,6 +191,79 @@ public class DisplayByDateActivity extends AppCompatActivity {
         public Button deleteSelectedItemsBtn, returnToMainBtn;
 
     }
+
+
+
+    @Override
+    public void onResume(){
+
+        super.onResume();
+        list.clear();
+
+        // Reload the items from the database
+
+        // Initialize expense item
+
+        mExpenseItem = new ExpenseItem();
+
+        //Initialize ExpenseDbHelper and SQLiteDB
+
+        expenseDbHelper = new ExpenseDbHelper(getApplicationContext());
+        sqLiteDatabase = expenseDbHelper.getReadableDatabase();
+
+        cursor = expenseDbHelper.getExpenseItem(sqLiteDatabase);
+
+        mRowNumber = 0;
+
+        if(cursor.moveToFirst()){
+
+            do{
+
+                int expense_ID;
+                String date, category, mstore, description, receipt_pic_string;
+                double expense_amount;
+
+                // These corresponds to the columns in the videoDbHelper: expense_ID (column 0),
+                // date (col. 1), expense_amount (col. 2), category (col. 3), store (col. 4),
+                // and description (col. 5)
+
+                // See sample below:
+
+                /*
+                private static final String CREATE_QUERY = "CREATE TABLE " + VideoListDB.NewVideoItem.TABLE_NAME +
+                "(" + VideoListDB.NewVideoItem.VIDEO_ID + " TEXT," +
+                VideoListDB.NewVideoItem.RANK + " INTEGER," +
+                VideoListDB.NewVideoItem.TITLE + " TEXT," +
+                VideoListDB.NewVideoItem.AUTHOR + " TEXT," +
+                VideoListDB.NewVideoItem.YEAR + " INTEGER);"; */
+
+                expense_ID = cursor.getInt(0);
+                date = cursor.getString(1);
+                expense_amount = cursor.getDouble(2);
+                category = cursor.getString(3);
+                mstore = cursor.getString(4);
+                description = cursor.getString(5);
+                receipt_pic_string = cursor.getString(6);
+
+                mExpenseItem = new ExpenseItem(expense_ID, date, expense_amount, category,
+                        mstore, description, receipt_pic_string);
+
+                list.add(mExpenseItem);
+
+                mRowNumber++;
+
+            }
+
+            while(cursor.moveToNext());
+
+        }
+
+        // Done reloading items from the database
+
+        mAdapter.refresh(list);
+
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

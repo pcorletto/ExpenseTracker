@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
 
-    private final List<ExpenseItem> list;
+    private List<ExpenseItem> list;
 
     ArrayList<Boolean> positionArray;
 
@@ -168,6 +168,12 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
         });
 
         return convertView;
+    }
+
+    public void refresh(List<ExpenseItem> list){
+
+        this.list = list;
+
     }
 
     private static class ViewHolder{
