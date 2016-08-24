@@ -82,13 +82,13 @@ public class DisplayByDateActivity extends AppCompatActivity {
 
         listview.addFooterView(footerView);
 
-        ViewHolder holder = new ViewHolder();
+        final ViewHolder holder = new ViewHolder();
 
         holder.totalExpenseEditText = (TextView) footerView.findViewById(R.id.totalExpenseEditText);
         holder.deleteSelectedItemsBtn = (Button) footerView.findViewById(R.id.deleteSelectedItemsBtn);
         holder.returnToMainBtn = (Button) footerView.findViewById(R.id.returnToMainBtn);
 
-        DecimalFormat df = new DecimalFormat("$0.00");
+        final DecimalFormat df = new DecimalFormat("$0.00");
 
         holder.totalExpenseEditText.setText(df.format(totalExpense));
 
@@ -138,9 +138,15 @@ public class DisplayByDateActivity extends AppCompatActivity {
 
                         sqLiteDatabase = expenseDbHelper.getReadableDatabase();
 
+                        totalExpense = totalExpense - list.get(i).getExpenseAmount();
+
                         // Delete the expense item from the SQLite database
 
                         expenseDbHelper.deleteExpenseItem(item_for_DB_deletion, sqLiteDatabase);
+
+                        holder.totalExpenseEditText.setText(df.format(totalExpense));
+
+
 
 
                     } else {
@@ -200,6 +206,8 @@ public class DisplayByDateActivity extends AppCompatActivity {
         super.onResume();
         list.clear();
 
+        double newTotalExpense = 0;
+
         // Reload the items from the database
 
         // Initialize expense item
@@ -250,6 +258,8 @@ public class DisplayByDateActivity extends AppCompatActivity {
 
                 list.add(mExpenseItem);
 
+                newTotalExpense = expense_amount + newTotalExpense;
+
                 mRowNumber++;
 
             }
@@ -261,6 +271,14 @@ public class DisplayByDateActivity extends AppCompatActivity {
         // Done reloading items from the database
 
         mAdapter.refresh(list);
+
+
+
+        TextView totalExpenseEditText = (TextView) footerView.findViewById(R.id.totalExpenseEditText);
+
+        final DecimalFormat df = new DecimalFormat("$0.00");
+
+        totalExpenseEditText.setText(df.format(newTotalExpense));
 
     }
 

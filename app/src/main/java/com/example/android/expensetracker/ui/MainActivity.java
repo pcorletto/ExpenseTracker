@@ -23,7 +23,7 @@ public class MainActivity extends ActionBarActivity {
     // Data structures
 
     private ExpenseItem mExpenseItem;
-    private int mRowNumber;
+    private int mRowNumber=0;
     private ExpenseList mExpenseList = new ExpenseList();
 
     Context context;

@@ -403,6 +403,8 @@ public class StoreActivity extends ActionBarActivity {
 
         expenseDbHelper.close();
 
+        finish();
+
     }
 
     public String getCurrentDate(){

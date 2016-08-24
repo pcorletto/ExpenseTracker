@@ -173,6 +173,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
     public void refresh(List<ExpenseItem> list){
 
         this.list = list;
+        notifyDataSetChanged();
 
     }
 
