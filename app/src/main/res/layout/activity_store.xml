@@ -191,25 +191,31 @@
         android:gravity="center_horizontal">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="65dp"
             android:layout_height="match_parent"
             android:text="@string/store_expense_btn"
             android:id="@+id/storeButton"
             android:textSize="12sp"/>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="65dp"
             android:layout_height="match_parent"
             android:text="@string/clear_button"
             android:id="@+id/clearButton"
             android:textSize="12sp"/>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:text="@string/view_display_options_btn"
             android:id="@+id/displayButton"
             android:textSize="12sp"/>
+
+        <Button
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:text="@string/return_main_button_label"
+            android:id="@+id/returnMainBtn"/>
 
     </LinearLayout>
 

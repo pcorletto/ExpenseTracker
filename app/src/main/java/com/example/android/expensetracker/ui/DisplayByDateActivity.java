@@ -1,7 +1,6 @@
 package com.example.android.expensetracker.ui;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import com.example.android.expensetracker.R;
 import com.example.android.expensetracker.model.ExpenseDbHelper;
 import com.example.android.expensetracker.model.ExpenseItem;
 import com.example.android.expensetracker.model.ExpenseItemAdapter;
-import com.example.android.expensetracker.model.ExpenseList;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -44,7 +42,6 @@ public class DisplayByDateActivity extends AppCompatActivity {
     private double totalExpense;
 
     private ExpenseItem mExpenseItem;
-    private ExpenseList mExpenseList = new ExpenseList();
     Cursor cursor;
 
     @Override
@@ -86,6 +83,7 @@ public class DisplayByDateActivity extends AppCompatActivity {
 
         holder.totalExpenseEditText = (TextView) footerView.findViewById(R.id.totalExpenseEditText);
         holder.deleteSelectedItemsBtn = (Button) footerView.findViewById(R.id.deleteSelectedItemsBtn);
+        holder.returnPreviousBtn = (Button) footerView.findViewById(R.id.returnPreviousBtn);
         holder.returnToMainBtn = (Button) footerView.findViewById(R.id.returnToMainBtn);
 
         final DecimalFormat df = new DecimalFormat("$0.00");
@@ -105,23 +103,23 @@ public class DisplayByDateActivity extends AppCompatActivity {
 
                         // Retrieve last expense_ID from Shared Prefs file
 
-                        SharedPreferences sharedPreferences = DisplayByDateActivity.this
-                                .getSharedPreferences(getString(R.string.ET_PREF_FILE), MODE_PRIVATE);
-                        int mExpenseID = sharedPreferences.getInt(getString(R.string.EXPENSE_ID),0);
+                        //SharedPreferences sharedPreferences = DisplayByDateActivity.this
+                        //        .getSharedPreferences(getString(R.string.ET_PREF_FILE), MODE_PRIVATE);
+                        //int mExpenseID = sharedPreferences.getInt(getString(R.string.EXPENSE_ID),0);
 
                         // Subtract one from expense ID
 
-                        mExpenseID = mExpenseID - 1;
+                        //mExpenseID = mExpenseID - 1;
 
                         // Since the item is already marked for deletion, store the new value of
                         // expense ID in SharedPrefs file
 
-                        sharedPreferences = DisplayByDateActivity.this
-                                .getSharedPreferences(getString(R.string.ET_PREF_FILE), MODE_PRIVATE);
+                        //sharedPreferences = DisplayByDateActivity.this
+                        //        .getSharedPreferences(getString(R.string.ET_PREF_FILE), MODE_PRIVATE);
 
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putInt(getString(R.string.EXPENSE_ID), mExpenseID);
-                        editor.commit();
+                        //SharedPreferences.Editor editor = sharedPreferences.edit();
+                        //editor.putInt(getString(R.string.EXPENSE_ID), mExpenseID);
+                        //editor.commit();
 
                         // For ListView: Skip checked or selected items. These will be deleted and will not
                         // be added to the new listview.
@@ -174,12 +172,22 @@ public class DisplayByDateActivity extends AppCompatActivity {
 
         });
 
+        holder.returnPreviousBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                finish();
+            }
+        });
+
 
         holder.returnToMainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                finish();
+                Intent intent = new Intent(DisplayByDateActivity.this, MainActivity.class);
+                startActivity(intent);
+
 
             }
 
@@ -194,7 +202,7 @@ public class DisplayByDateActivity extends AppCompatActivity {
 
         public TextView totalExpenseEditText;
 
-        public Button deleteSelectedItemsBtn, returnToMainBtn;
+        public Button deleteSelectedItemsBtn, returnPreviousBtn, returnToMainBtn;
 
     }
 

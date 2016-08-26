@@ -42,7 +42,7 @@ public class StoreActivity extends ActionBarActivity {
     // Views to be bound
 
     private EditText amountEditText, descriptionEditText;
-    private Button storeButton, clearButton, displayButton;
+    private Button storeButton, clearButton, displayButton, returnMainBtn;
     public static final String TAG = StoreActivity.class.getSimpleName();
 
     // Data structures
@@ -142,6 +142,8 @@ public class StoreActivity extends ActionBarActivity {
         storeButton = (Button) findViewById(R.id.storeButton);
         clearButton = (Button) findViewById(R.id.clearButton);
         displayButton = (Button) findViewById(R.id.displayButton);
+        returnMainBtn = (Button) findViewById(R.id.returnMainBtn);
+
         store_spinner = (Spinner) findViewById(R.id.store_spinner);
         group1 = (RadioGroup) findViewById(R.id.group1);
         group2 = (RadioGroup) findViewById(R.id.group2);
@@ -301,6 +303,15 @@ public class StoreActivity extends ActionBarActivity {
                 intent.putExtra(getString(R.string.EXPENSE_LIST), mExpenseList.mExpenseItem);
 
                 startActivity(intent);
+
+            }
+        });
+
+        returnMainBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                finish();
 
             }
         });

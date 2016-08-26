@@ -56,17 +56,24 @@
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/layout3">
+            android:id="@+id/layout3"
+            android:layout_gravity="center_horizontal">
 
             <Button
-                android:layout_width="141dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:text="@string/delete_selected_expenses_button"
                 android:id="@+id/deleteSelectedItemsBtn"
                 />
 
             <Button
-                android:layout_width="134dp"
+                android:layout_width="95dp"
+                android:layout_height="wrap_content"
+                android:text="@string/return_previous_lbl"
+                android:id="@+id/returnPreviousBtn"/>
+
+            <Button
+                android:layout_width="65dp"
                 android:layout_height="wrap_content"
                 android:text="@string/return_main_button_label"
                 android:id="@+id/returnToMainBtn"

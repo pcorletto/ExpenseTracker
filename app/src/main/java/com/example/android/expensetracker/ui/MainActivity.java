@@ -1,6 +1,5 @@
 package com.example.android.expensetracker.ui;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -23,23 +22,21 @@ public class MainActivity extends ActionBarActivity {
     // Data structures
 
     private ExpenseItem mExpenseItem;
-    private int mRowNumber=0;
+    private int mRowNumber;
     private ExpenseList mExpenseList = new ExpenseList();
 
-    Context context;
     ExpenseDbHelper expenseDbHelper;
     SQLiteDatabase sqLiteDatabase;
     Cursor cursor;
 
-    private Button storeExpenseButton, displayExpenseOptionsButton;
+    private Button storeLocatorButton, expenseTrackerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        storeExpenseButton = (Button) findViewById(R.id.displayByDateButton);
-        displayExpenseOptionsButton = (Button) findViewById(R.id.displayExpenseOptionsButton);
+        expenseTrackerButton = (Button) findViewById(R.id.expenseTrackerButton);
 
         // Retrieve any previous row number stored on the SharedPreferences file
 
@@ -49,7 +46,7 @@ public class MainActivity extends ActionBarActivity {
 
         // When the storeExpenseButton is clicked, the StoreActivity is invoked.
 
-        storeExpenseButton.setOnClickListener(new View.OnClickListener() {
+        expenseTrackerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -119,11 +116,11 @@ public class MainActivity extends ActionBarActivity {
 
         }
 
-        displayExpenseOptionsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        //displayExpenseOptionsButton.setOnClickListener(new View.OnClickListener() {
+            //@Override
+            //public void onClick(View v) {
 
-                Intent intent = new Intent(MainActivity.this, DisplayByDateActivity.class);
+          //      Intent intent = new Intent(MainActivity.this, DisplayByDateActivity.class);
 
                 // When I fix up Display By Groceries, DisplayByGas, Display By Medicine, etc..
 
@@ -136,15 +133,15 @@ public class MainActivity extends ActionBarActivity {
                 // Next, I will pass in the array of expense items, mExpenseList, an ExpenseList object
                 // to DisplayActivity.java
 
-                intent.putExtra(getString(R.string.ROW_NUMBER), mRowNumber);
+              //  intent.putExtra(getString(R.string.ROW_NUMBER), mRowNumber);
 
-                intent.putExtra(getString(R.string.EXPENSE_LIST), mExpenseList.mExpenseItem);
+                //intent.putExtra(getString(R.string.EXPENSE_LIST), mExpenseList.mExpenseItem);
 
-                startActivity(intent);
+                //startActivity(intent);
 
-            }
+            //}
 
-        });
+        //});
 
     }
 
