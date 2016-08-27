@@ -207,7 +207,7 @@ public class StoreActivity extends ActionBarActivity {
             do{
 
                 int expense_ID;
-                String date, category, mstore, description, receipt_pic_string;
+                String date, category, mstore, description;
                 double expense_amount;
 
                 // These corresponds to the columns in the videoDbHelper: expense_ID (column 0),
@@ -230,10 +230,9 @@ public class StoreActivity extends ActionBarActivity {
                 category = cursor.getString(3);
                 mstore = cursor.getString(4);
                 description = cursor.getString(5);
-                receipt_pic_string = cursor.getString(6);
 
                 mExpenseItem = new ExpenseItem(expense_ID, date, expense_amount, category,
-                        mstore, description, receipt_pic_string);
+                        mstore, description);
 
                 mExpenseList.addExpenseItem(mExpenseItem, mRowNumber);
 
@@ -395,11 +394,9 @@ public class StoreActivity extends ActionBarActivity {
 
         mExpenseID = mExpenseID + 1;
 
-        receiptNumber = mExpenseID + "";
-
         // Insert the item details in the database
         expenseDbHelper.addItem(mExpenseID, mDate, mExpenseAmount, mCategory, mStore,
-                mDescription, receiptNumber, sqLiteDatabase);
+                mDescription, sqLiteDatabase);
 
         Toast.makeText(StoreActivity.this, "Expense Item # "+ mExpenseID + " Saved.", Toast.LENGTH_LONG).show();
 
@@ -492,6 +489,8 @@ public class StoreActivity extends ActionBarActivity {
                     selectedImagePreview.setImageBitmap(new UserPicture(selectedImageUri, getContentResolver()).getBitmap());
 
                     Bitmap bm = new UserPicture(selectedImageUri, getContentResolver()).getBitmap();
+
+                    Toast.makeText(StoreActivity.this, "PICTURE" + (mRowNumber + 1), Toast.LENGTH_LONG).show();
 
                     saveImage(this, bm, "PICTURE" + (mRowNumber + 1), "BMP");
 

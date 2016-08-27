@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.android.expensetracker.R;
 
@@ -21,7 +22,6 @@ public class DisplayReceiptActivity extends ActionBarActivity {
     private ImageView receiptImageView;
     private Button returnPreviousBtn, returnMainBtn;
     private Bitmap bm;
-    private String receiptNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +36,11 @@ public class DisplayReceiptActivity extends ActionBarActivity {
 
         Intent intent = getIntent();
 
-        receiptNumber = intent.getStringExtra(getString(R.string.RECEIPT_NUMBER));
+        int expenseID = intent.getIntExtra(getString(R.string.EXPENSE_ID), 0);
 
-        bm = getImageBitmap(this, "PICTURE"+receiptNumber, "BMP");
+        Toast.makeText(DisplayReceiptActivity.this, "PICTURE"+expenseID, Toast.LENGTH_LONG).show();
+
+        bm = getImageBitmap(this, "PICTURE"+expenseID, "BMP");
 
         // Set the ImageView image to the receipt image pulled from internal storage
 

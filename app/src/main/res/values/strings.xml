@@ -39,7 +39,6 @@
     <string name="EXPENSE_ID">EXPENSE_ID</string>
     <string name="ROW_NUMBER">ROW_NUMBER</string>
     <string name="ET_PREF_FILE">ET_PREF_FILE</string>
-    <string name="RECEIPT_NUMBER">RECEIPT_NUMBER</string>
     <string name="no_expense_prompt">There are no expenses to display!</string>
     <string name="return_main_button_label">Main</string>
     <string name="delete_selected_expenses_button">Delete</string>
