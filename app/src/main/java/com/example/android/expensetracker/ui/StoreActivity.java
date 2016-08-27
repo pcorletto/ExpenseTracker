@@ -490,9 +490,18 @@ public class StoreActivity extends ActionBarActivity {
 
                     Bitmap bm = new UserPicture(selectedImageUri, getContentResolver()).getBitmap();
 
-                    Toast.makeText(StoreActivity.this, "PICTURE" + (mRowNumber + 1), Toast.LENGTH_LONG).show();
+                    // Trying to store the picture at the position of the last mExpenseID plus one
+                    // Get the number of the last mExpenseID stored from Shared Preferences File
 
-                    saveImage(this, bm, "PICTURE" + (mRowNumber + 1), "BMP");
+                    SharedPreferences sharedPreferences = StoreActivity.this
+                            .getSharedPreferences(getString(R.string.ET_PREF_FILE), MODE_PRIVATE);
+                    mExpenseID = sharedPreferences.getInt(getString(R.string.EXPENSE_ID),0);
+
+                    Toast.makeText(StoreActivity.this, "PICTURE" + (mExpenseID + 1), Toast.LENGTH_LONG).show();
+
+
+                    saveImage(this, bm, "PICTURE" + (mExpenseID + 1), "BMP");
+
 
                 } catch (IOException e) {
                     Log.e(MainActivity.class.getSimpleName(), "Failed to load image", e);
