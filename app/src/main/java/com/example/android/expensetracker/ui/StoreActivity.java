@@ -7,10 +7,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -185,7 +188,34 @@ public class StoreActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
+                String expenseAmountString = amountEditText.getText().toString();
+
+                // Check if the user did not enter anything. If no entry, then alert
+                if(TextUtils.isEmpty(expenseAmountString)){
+                    amountEditText.setError(getString(R.string.empty_expense_amount_alert));
+                    ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
+                    toneG.startTone(ToneGenerator.TONE_SUP_CONGESTION, 200);
+                    return;
+                }
+
+                String descriptionString = descriptionEditText.getText().toString();
+
+                // Check if the user did not enter anything. If no entry, then alert
+                if(TextUtils.isEmpty(descriptionString)){
+                    descriptionEditText.setError(getString(R.string.empty_description_alert));
+                    ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
+                    toneG.startTone(ToneGenerator.TONE_SUP_CONGESTION, 200);
+                    return;
+                }
+
+
                 addItem(v);
+
+                // Play a beeping sound once the expense is successfully stored.
+
+                ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
+                toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
+
             }
         });
 

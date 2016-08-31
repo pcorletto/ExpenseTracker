@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -71,8 +71,8 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
             holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkBox);
             holder.amountEditText = (TextView) convertView.findViewById(R.id.amountEditText);
             holder.dateEditText = (TextView) convertView.findViewById(R.id.dateEditText);
-            holder.expandItemButton = (Button) convertView.findViewById(R.id.expandItemButton);
-            holder.displayReceiptButton = (Button) convertView.findViewById(R.id.displayReceiptButton);
+            holder.expandItemButton = (ImageButton) convertView.findViewById(R.id.expandItemButton);
+            holder.displayReceiptButton = (ImageButton) convertView.findViewById(R.id.displayReceiptButton);
             holder.storeEditText = (TextView) convertView.findViewById(R.id.storeEditText);
 
             holder.layout2 = (LinearLayout) convertView.findViewById(R.id.layout2);
@@ -189,7 +189,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
         CheckBox checkBox;
         TextView amountEditText;
         TextView dateEditText;
-        Button expandItemButton, displayReceiptButton;
+        ImageButton expandItemButton,displayReceiptButton;
         TextView storeEditText;
         TextView categoryEditText;
         TextView descriptionEditText;

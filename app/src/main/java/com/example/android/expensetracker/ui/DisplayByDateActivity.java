@@ -145,8 +145,6 @@ public class DisplayByDateActivity extends AppCompatActivity {
                         holder.totalExpenseEditText.setText(df.format(totalExpense));
 
 
-
-
                     } else {
 
                         // Add the item to the listview, because it won't be deleted.
@@ -206,7 +204,11 @@ public class DisplayByDateActivity extends AppCompatActivity {
 
     }
 
-
+    // The following onResume code is necessary. Otherwise, if we delete an item or items from
+    // the SQLite database, they will be deleted from the database, but not from the list adapter
+    // and they will be displayed again. Therefore, we need to clear the list, and reload it
+    // again, fresh, pulling the items again from the  SQLite database. We can then refresh
+    // the list in the adapter.
 
     @Override
     public void onResume(){
@@ -280,6 +282,7 @@ public class DisplayByDateActivity extends AppCompatActivity {
         mAdapter.refresh(list);
 
 
+        // Refresh the footer:
 
         TextView totalExpenseEditText = (TextView) footerView.findViewById(R.id.totalExpenseEditText);
 

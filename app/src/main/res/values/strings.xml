@@ -58,5 +58,7 @@
     <string name="return_previous_lbl">Previous</string>
     <string name="store_locator_button">NEAREST STORE LOCATOR</string>
     <string name="receipt_tracker_button">EXPENSE TRACKER</string>
+    <string name="empty_expense_amount_alert">Please enter an expense amount!</string>
+    <string name="empty_description_alert">Please enter a description!</string>
 
 </resources>
