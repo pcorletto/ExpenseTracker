@@ -6,20 +6,22 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.android.expensetracker.R;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 
 public class DisplayReceiptActivity extends ActionBarActivity {
 
-    private ImageView receiptImageView;
+    private WebView receiptWebView;
     private Button returnPreviousBtn, returnMainBtn;
     private Bitmap bm;
 
@@ -28,7 +30,7 @@ public class DisplayReceiptActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_receipt);
 
-        receiptImageView = (ImageView) findViewById(R.id.receiptImageView);
+        receiptWebView = (WebView) findViewById(R.id.receiptWebView);
         returnPreviousBtn = (Button) findViewById(R.id.returnPreviousBtn);
         returnMainBtn = (Button) findViewById(R.id.returnMainBtn);
 
@@ -42,9 +44,23 @@ public class DisplayReceiptActivity extends ActionBarActivity {
 
         bm = getImageBitmap(this, "PICTURE"+expenseID, "BMP");
 
-        // Set the ImageView image to the receipt image pulled from internal storage
+        // Set the WebView image to the receipt image pulled from internal storage
 
-        receiptImageView.setImageBitmap(bm);
+        // REFERENCE:
+        // http://stackoverflow.com/questions/10849200/android-how-to-display-a-bitmap-in-a-webview
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        String imgageBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        String dataURL= "data:image/png;base64," + imgageBase64;
+
+        receiptWebView.loadUrl(dataURL); //pass the bitmap base64 dataurl in URL parameter
+
+        // Enable zooming in and out on receipt image
+
+        receiptWebView.getSettings().setSupportZoom(true);
+        receiptWebView.getSettings().setBuiltInZoomControls(true);
 
         returnPreviousBtn.setOnClickListener(new View.OnClickListener() {
             @Override
