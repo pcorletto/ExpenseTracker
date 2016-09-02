@@ -37,6 +37,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         expenseTrackerButton = (Button) findViewById(R.id.expenseTrackerButton);
+        storeLocatorButton = (Button) findViewById(R.id.storeLocatorButton);
 
         // Retrieve any previous row number stored on the SharedPreferences file
 
@@ -52,6 +53,16 @@ public class MainActivity extends ActionBarActivity {
 
                 Intent intent = new Intent(MainActivity.this, StoreActivity.class);
                 intent.putExtra(getString(R.string.ROW_NUMBER), mRowNumber);
+                startActivity(intent);
+
+            }
+        });
+
+        storeLocatorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this, LocatorActivity.class);
                 startActivity(intent);
 
             }
