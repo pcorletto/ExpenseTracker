@@ -147,6 +147,8 @@ public class StoreActivity extends ActionBarActivity {
         displayButton = (Button) findViewById(R.id.displayButton);
         returnMainBtn = (Button) findViewById(R.id.returnMainBtn);
 
+
+
         store_spinner = (Spinner) findViewById(R.id.store_spinner);
         group1 = (RadioGroup) findViewById(R.id.group1);
         group2 = (RadioGroup) findViewById(R.id.group2);
@@ -273,6 +275,7 @@ public class StoreActivity extends ActionBarActivity {
             while(cursor.moveToNext());
 
         }
+
 
         // The following block of code clears the EditText when tapped, if there was already
         // some user input on it.
@@ -613,5 +616,6 @@ public class StoreActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }
