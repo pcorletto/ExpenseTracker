@@ -82,12 +82,12 @@
             android:value="" />
 
         <activity
-            android:name=".ui.MapActivity"
-            android:label="@string/title_activity_map"
+            android:name=".ui.GooglePlacesActivity"
+            android:label="@string/title_activity_google_places"
             android:parentActivityName=".ui.LocatorActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.expensetracker.ui.LocatorActivity" />
+                android:value="com.example.android.expensetracker.ui.GooglePlacesActivity" />
         </activity>
     </application>
 

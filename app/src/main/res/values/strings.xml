@@ -67,5 +67,9 @@
     <string name="map_button_label">MAP</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_mapping">MappingActivity</string>
+    <string name="title_activity_google_places">GooglePlacesActivity</string>
+    <string name="label_btn_find">Find</string>
+    <string name="next_btn_lbl">Next</string>
+    <string name="store_name">store_name</string>
 
 </resources>
