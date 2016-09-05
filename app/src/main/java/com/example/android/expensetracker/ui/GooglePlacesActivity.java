@@ -43,6 +43,10 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
         Intent intent = getIntent();
         storeName = intent.getStringExtra(getString(R.string.store_name));
 
+        // If the store name is made up of more than one word, replace all spaces with
+        // a blank space character so that it can be appended properly to url
+        storeName = storeName.replaceAll(" ", "%20");
+
         SupportMapFragment fragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.googleMap);
         googleMap = fragment.getMap();
         googleMap.setMyLocationEnabled(true);

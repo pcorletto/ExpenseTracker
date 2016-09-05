@@ -63,7 +63,7 @@
     <string name="title_activity_locator">LocatorActivity</string>
     <string name="locator_activity_title">Nearest Store Locator</string>
     <string name="locator_activity_subtitle">Pick the type of store</string>
-    <string name="locator_activity_subtitle2">or type it in</string>
+    <string name="locator_activity_subtitle2">or type it in.\n What are you looking for?</string>
     <string name="map_button_label">MAP</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_mapping">MappingActivity</string>

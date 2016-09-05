@@ -18,8 +18,8 @@ import com.example.android.expensetracker.R;
 public class LocatorActivity extends ActionBarActivity {
 
     // String array to hold the store names to pick from
-    private String[] storeType = {"", "Pharmacy", "Supermarket", "Gas Station", "Clothing Store",
-            "Restaurant", "Auto Parts"};
+    private String[] storeType = {"Pick a store type ...", "Pharmacy", "Supermarket", "Gas", "Clothing",
+            "Restaurant", "Auto", "Laundry"};
 
     // Member variables
 
@@ -74,7 +74,13 @@ public class LocatorActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
+
                 typedInStore = true;
+
+                // If the user had already picked a store type on the spinner,
+                // reset the spinner back to the first possibility = none.
+
+                store_type_spinner.setSelection(0);
 
             }
         });
@@ -89,9 +95,21 @@ public class LocatorActivity extends ActionBarActivity {
 
                 }
 
-                Intent intent = new Intent(LocatorActivity.this, GooglePlacesActivity.class);
-                intent.putExtra(getString(R.string.store_name), mStoreType);
-                startActivity(intent);
+                // If the user has not typed in a store name, AND he/she has not picked
+                // a store type from the spinner, don't map, alert about making a
+                // selection
+
+                if((!typedInStore)&&(store_type_spinner.getSelectedItemPosition()==0)){
+
+                    Toast.makeText(LocatorActivity.this, "Pick a store type!", Toast.LENGTH_LONG).show();
+                }
+
+                else {
+
+                    Intent intent = new Intent(LocatorActivity.this, GooglePlacesActivity.class);
+                    intent.putExtra(getString(R.string.store_name), mStoreType);
+                    startActivity(intent);
+                }
 
             }
         });
