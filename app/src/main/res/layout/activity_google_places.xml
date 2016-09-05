@@ -11,27 +11,49 @@
     <!-- REFERENCE: Tutorial found at:
     http://javapapers.com/android/android-show-current-location-on-map-using-google-maps-api/-->
 
-<!--
-    <EditText
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/placeText" />
-
-    <Button
-        android:id="@+id/btnFind"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@id/placeText"
-        android:text="@string/label_btn_find" />
-
-        -->
-
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
               android:id="@+id/googleMap"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               class="com.google.android.gms.maps.SupportMapFragment" />
 
-</RelativeLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonLayout2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center_horizontal">
 
+        <Button
+            android:layout_width="85dp"
+            android:layout_height="match_parent"
+            android:text="@string/return_previous_lbl"
+            android:id="@+id/previousActivityButton"
+            android:textSize="12sp"/>
+
+        <Button
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:text="@string/return_main_button_label"
+            android:id="@+id/returnMainActivityBtn"/>
+
+        <Button
+            android:layout_width="65dp"
+            android:layout_height="match_parent"
+            android:text="@string/store_expense_btn"
+            android:id="@+id/storePlaceButton"
+            android:textSize="12sp"/>
+
+        <Button
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:text="@string/view_display_options_btn"
+            android:id="@+id/displayPlacesButton"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

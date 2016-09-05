@@ -1,10 +1,11 @@
 package com.example.android.expensetracker.model;
 
+// REFERENCES: Tutorial found at:
+// http://javapapers.com/android/find-places-nearby-in-google-maps-using-google-places-apiandroid-app/
+
 import android.os.AsyncTask;
 import android.util.Log;
 
-//
-// import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;

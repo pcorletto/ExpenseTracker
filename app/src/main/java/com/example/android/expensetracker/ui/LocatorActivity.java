@@ -99,7 +99,7 @@ public class LocatorActivity extends ActionBarActivity {
                 // a store type from the spinner, don't map, alert about making a
                 // selection
 
-                if((!typedInStore)&&(store_type_spinner.getSelectedItemPosition()==0)){
+                if((!typedInStore)&&(store_type_spinner.getSelectedItemId()==0)){
 
                     Toast.makeText(LocatorActivity.this, "Pick a store type!", Toast.LENGTH_LONG).show();
                 }

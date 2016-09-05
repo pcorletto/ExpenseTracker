@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.expensetracker" >
+          package="com.example.android.expensetracker" >
 
     <permission
         android:name="com.example.android.expensetracker.permission.MAPS_RECEIVE"

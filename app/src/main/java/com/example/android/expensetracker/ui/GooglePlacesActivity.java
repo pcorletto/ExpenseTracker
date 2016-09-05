@@ -10,6 +10,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.android.expensetracker.R;
@@ -30,21 +32,27 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
     private int PROXIMITY_RADIUS = 5000;
     String storeName;
 
+    private Button previousActivityButton, returnMainActivityBtn, storePlaceButton, displayPlacesButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_google_places);
+
+        previousActivityButton = (Button) findViewById(R.id.previousActivityButton);
+        returnMainActivityBtn = (Button) findViewById(R.id.returnMainActivityBtn);
+        storePlaceButton = (Button) findViewById(R.id.storePlaceButton);
+        displayPlacesButton = (Button) findViewById(R.id.displayPlacesButton);
 
         //show error dialog if GooglePlayServices not available
         if (!isGooglePlayServicesAvailable()) {
             finish();
         }
-        setContentView(R.layout.activity_google_places);
 
         Intent intent = getIntent();
         storeName = intent.getStringExtra(getString(R.string.store_name));
 
-        // If the store name is made up of more than one word, replace all spaces with
-        // a blank space character so that it can be appended properly to url
         storeName = storeName.replaceAll(" ", "%20");
 
         SupportMapFragment fragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.googleMap);
@@ -72,9 +80,26 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
         toPass[0] = googleMap;
         toPass[1] = googlePlacesUrl.toString();
         googlePlacesReadTask.execute(toPass);
+
+        previousActivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                finish();
+
+            }
+        });
+
+        returnMainActivityBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(GooglePlacesActivity.this, MainActivity.class);
+                startActivity(intent);
+
+            }
+        });
     }
-
-
 
     private boolean isGooglePlayServicesAvailable() {
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
@@ -112,4 +137,5 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
     public void onStatusChanged(String provider, int status, Bundle extras) {
         // TODO Auto-generated method stub
     }
+
 }
