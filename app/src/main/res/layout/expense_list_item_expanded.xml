@@ -71,15 +71,20 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/filler1"/>
 
-            <TextView
-                android:layout_width="140dp"
+            <ImageView
+                android:layout_width="70dp"
                 android:layout_height="match_parent"
-                android:id="@+id/descriptionEditText"/>
-
+                android:id="@+id/categoryImageView"/>
+<!--
             <TextView
                 android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:id="@+id/categoryEditText"/>
+-->
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="match_parent"
+                android:id="@+id/descriptionEditText"/>
 
             <ImageButton
                 android:layout_width="50dp"

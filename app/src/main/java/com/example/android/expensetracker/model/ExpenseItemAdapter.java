@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -77,7 +78,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
 
             holder.layout2 = (LinearLayout) convertView.findViewById(R.id.layout2);
 
-            holder.categoryEditText = (TextView) convertView.findViewById(R.id.categoryEditText);
+            holder.categoryImageView = (ImageView) convertView.findViewById(R.id.categoryImageView);
             holder.descriptionEditText = (TextView) convertView.findViewById(R.id.descriptionEditText);
 
             convertView.setTag(holder);
@@ -106,7 +107,7 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
 
         holder.amountEditText.setText(df.format(holder.expenseAmount));
         holder.dateEditText.setText(holder.date);
-        holder.categoryEditText.setText(holder.category);
+        holder.categoryImageView.setImageResource(getCategoryIconID(holder.category));
         holder.storeEditText.setText(holder.pstore);
         holder.descriptionEditText.setText(holder.description);
 
@@ -170,6 +171,42 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
         return convertView;
     }
 
+    private int getCategoryIconID(String category) {
+
+        //Initialize categoryIconId to misc
+        int categoryIconId = R.drawable.miscicon;
+
+        if(category.equals("Grocery Shopping")){
+            categoryIconId = R.drawable.groceryicon;
+        }
+
+        else if(category.equals("Dine Out")){
+            categoryIconId = R.drawable.dineouticon;
+        }
+
+        else if(category.equals("Gas")){
+            categoryIconId = R.drawable.gasicon;
+        }
+
+        else if(category.equals("Medicine")){
+            categoryIconId = R.drawable.medicineicon;
+        }
+
+        else if(category.equals("Cosmetics/Personal Hygiene")){
+            categoryIconId = R.drawable.cosmeticsicon;
+        }
+
+        else if(category.equals("Donations")){
+            categoryIconId = R.drawable.donationicon;
+        }
+
+        else if(category.equals("Misc./Other")){
+            categoryIconId = R.drawable.miscicon;
+        }
+
+        return categoryIconId;
+    }
+
     public void refresh(List<ExpenseItem> list){
 
         this.list = list;
@@ -191,7 +228,8 @@ public class ExpenseItemAdapter extends ArrayAdapter<ExpenseItem> {
         TextView dateEditText;
         ImageButton expandItemButton,displayReceiptButton;
         TextView storeEditText;
-        TextView categoryEditText;
+        ImageView categoryImageView;
+        //TextView categoryEditText;
         TextView descriptionEditText;
 
         LinearLayout layout2;
