@@ -22,6 +22,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
 public class GooglePlacesActivity extends FragmentActivity implements LocationListener {
 
@@ -80,6 +81,18 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
         toPass[0] = googleMap;
         toPass[1] = googlePlacesUrl.toString();
         googlePlacesReadTask.execute(toPass);
+
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+                String markerTitle = marker.getTitle().toString();
+
+                Toast.makeText(GooglePlacesActivity.this, markerTitle, Toast.LENGTH_LONG).show();
+
+                return true;
+            }
+        });
 
         previousActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
