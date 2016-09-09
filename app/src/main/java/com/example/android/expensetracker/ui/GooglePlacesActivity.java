@@ -24,7 +24,17 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
-import java.text.DecimalFormat;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 
 public class GooglePlacesActivity extends FragmentActivity implements LocationListener {
 
@@ -37,6 +47,9 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
     double distance = 0;
     private int PROXIMITY_RADIUS = 5000;
     String storeName;
+
+    String parsedDistance;
+    String response;
 
     private Button previousActivityButton, returnMainActivityBtn, storePlaceButton, displayPlacesButton;
 
@@ -91,18 +104,13 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
             @Override
             public boolean onMarkerClick(Marker marker) {
 
-
                 placeLatitude = marker.getPosition().latitude;
 
                 placeLongitude = marker.getPosition().longitude;
 
-                distance = calculateDistance(currentLatitude, currentLongitude, placeLatitude,
-                        placeLongitude);
-
-                DecimalFormat df = new DecimalFormat("#.#");
-
                 Toast.makeText(GooglePlacesActivity.this, marker.getTitle().toString() +
-                        "\n" + df.format(distance) + " miles away.", Toast.LENGTH_LONG).show();
+                        "\n" + getDistance(currentLatitude, currentLongitude, placeLatitude,
+                        placeLongitude), Toast.LENGTH_LONG).show();
 
                 return true;
             }
@@ -138,25 +146,49 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
         }
     }
 
-    public double calculateDistance(double latitude1, double longitude1, double latitude2, double longitude2){
+    public String getDistance(final double lat1, final double lon1, final double lat2, final double lon2){
 
-        int radius=6371; // radius of the Earth in Km
-        double lat1 = latitude1;
-        double lat2 = latitude2;
-        double lon1 = longitude1;
-        double lon2 = longitude2;
-        double dLat = Math.toRadians(lat2 - lat1);
-        double dLon = Math.toRadians(lon2 - lon1);
-        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-                        Math.sin(dLon/2) * Math.sin(dLon/2);
-        double c = 2 * Math.asin(Math.sqrt(a));
-        double distInKms = radius * c;  // Distance in Kilometers
-        double distInMiles = distInKms * 0.62137119;  // Distance converted to Miles
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
 
-        return distInMiles;
+                    URL url = new URL("http://maps.googleapis.com/maps/api/directions/json?origin=" + lat1 + "," + lon1 + "&destination=" + lat2 + "," + lon2 + "&sensor=false&units=metric&mode=driving");
+                    final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    InputStream in = new BufferedInputStream(conn.getInputStream());
+                    response = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
+
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray array = jsonObject.getJSONArray("routes");
+                    JSONObject routes = array.getJSONObject(0);
+                    JSONArray legs = routes.getJSONArray("legs");
+                    JSONObject steps = legs.getJSONObject(0);
+                    JSONObject distance = steps.getJSONObject("distance");
+
+                    //double distInMiles = distInKms * 0.62137119;  // Distance converted to Miles
+
+                    parsedDistance = distance.getString("text");
+
+                } catch (ProtocolException e) {
+                    e.printStackTrace();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return parsedDistance;
     }
-
 
     @Override
     public void onLocationChanged(Location location) {
