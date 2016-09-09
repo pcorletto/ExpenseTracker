@@ -35,6 +35,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.text.DecimalFormat;
 
 public class GooglePlacesActivity extends FragmentActivity implements LocationListener {
 
@@ -42,13 +43,13 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
     GoogleMap googleMap;
     double currentLatitude = 0;
     double currentLongitude = 0;
-    double placeLatitude = 0;
-    double placeLongitude = 0;
-    double distance = 0;
+    double destLatitude = 0;
+    double destLongitude = 0;
     private int PROXIMITY_RADIUS = 5000;
     String storeName;
+    double distanceKms = 0;
+    double distanceMiles = 0;
 
-    String parsedDistance;
     String response;
 
     private Button previousActivityButton, returnMainActivityBtn, storePlaceButton, displayPlacesButton;
@@ -104,13 +105,17 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
             @Override
             public boolean onMarkerClick(Marker marker) {
 
-                placeLatitude = marker.getPosition().latitude;
+                destLatitude = marker.getPosition().latitude;
 
-                placeLongitude = marker.getPosition().longitude;
+                destLongitude = marker.getPosition().longitude;
+
+                distanceMiles = getDistance(currentLatitude, currentLongitude, destLatitude,
+                        destLongitude);
+
+                DecimalFormat df = new DecimalFormat("#.#");
 
                 Toast.makeText(GooglePlacesActivity.this, marker.getTitle().toString() +
-                        "\n" + getDistance(currentLatitude, currentLongitude, placeLatitude,
-                        placeLongitude), Toast.LENGTH_LONG).show();
+                        "\n" + df.format(distanceMiles) + " miles away." , Toast.LENGTH_LONG).show();
 
                 return true;
             }
@@ -146,7 +151,7 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
         }
     }
 
-    public String getDistance(final double lat1, final double lon1, final double lat2, final double lon2){
+    public double getDistance(final double lat1, final double lon1, final double lat2, final double lon2){
 
         Thread thread=new Thread(new Runnable() {
             @Override
@@ -166,9 +171,9 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
                     JSONObject steps = legs.getJSONObject(0);
                     JSONObject distance = steps.getJSONObject("distance");
 
-                    //double distInMiles = distInKms * 0.62137119;  // Distance converted to Miles
+                    distanceKms = Double.parseDouble(distance.getString("text").replaceAll("[^\\.0123456789]","") );
 
-                    parsedDistance = distance.getString("text");
+                    distanceMiles = distanceKms * 0.62137119;  // Distance converted to Miles
 
                 } catch (ProtocolException e) {
                     e.printStackTrace();
@@ -187,7 +192,7 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return parsedDistance;
+        return distanceMiles;
     }
 
     @Override
