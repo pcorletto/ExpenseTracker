@@ -17,12 +17,11 @@
         android:focusable="false"
         android:focusableInTouchMode="false"/>
 
-    <TextView
-        android:layout_width="275dp"
+    <EditText
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/nameAddressListLabel"
-        android:gravity="center_horizontal"
         android:inputType="textMultiLine"/>
 
     <Button

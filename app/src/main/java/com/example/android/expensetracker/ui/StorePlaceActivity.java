@@ -25,8 +25,6 @@ import java.text.DecimalFormat;
 
 public class StorePlaceActivity extends ActionBarActivity {
 
-    public static final String TAG = StorePlaceActivity.class.getSimpleName();
-
     // Data structures
 
     private PlaceItem mPlaceItem;
@@ -54,6 +52,8 @@ public class StorePlaceActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_place);
+
+        mRowNumber = 0;
 
         nameAddressTextView = (TextView) findViewById(R.id.nameAddressTextView);
         distanceTextView = (TextView) findViewById(R.id.distanceTextView);
@@ -154,6 +154,7 @@ public class StorePlaceActivity extends ActionBarActivity {
                 // Next, I will pass in the array of place items, mPlaceList, a Placelist object
                 // to DisplayPlaceActivity.java
 
+                // Get the last value of mRowNumber stored in SharedPreferences file
 
                 intent.putExtra(getString(R.string.ROW_NUMBER), mRowNumber);
 
@@ -182,9 +183,6 @@ public class StorePlaceActivity extends ActionBarActivity {
 
             }
         });
-
-
-
 
     }
 
@@ -256,7 +254,10 @@ public class StorePlaceActivity extends ActionBarActivity {
 
         placeDbHelper.close();
 
-        finish();
+        // Go back to Main Activity
+
+        Intent intent = new Intent(StorePlaceActivity.this, MainActivity.class);
+        startActivity(intent);
 
     }
 

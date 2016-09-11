@@ -1,6 +1,8 @@
 package com.example.android.expensetracker.ui;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -14,8 +16,21 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.android.expensetracker.R;
+import com.example.android.expensetracker.model.PlaceDbHelper;
+import com.example.android.expensetracker.model.PlaceItem;
+import com.example.android.expensetracker.model.PlaceList;
 
 public class LocatorActivity extends ActionBarActivity {
+
+    // Data structures
+
+    private PlaceItem mPlaceItem;
+    private int mRowNumber;
+    private PlaceList mPlaceList = new PlaceList();
+
+    PlaceDbHelper placeDbHelper;
+    SQLiteDatabase sqLiteDatabase;
+    Cursor cursor;
 
     // String array to hold the store names to pick from
     private String[] storeType = {"Pick a store type ...", "Pharmacy", "Supermarket", "Gas", "Clothing",
@@ -25,7 +40,7 @@ public class LocatorActivity extends ActionBarActivity {
 
     private Spinner store_type_spinner;
     private String mStoreType;
-    private Button mapButton, returnMainButton;
+    private Button mapButton, returnMainButton, displayPlacesButton;
     private EditText storeEditText;
     private boolean typedInStore;
 
@@ -35,12 +50,68 @@ public class LocatorActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locator);
 
+        mRowNumber = 0;
+
         typedInStore = false;
 
         store_type_spinner = (Spinner) findViewById(R.id.storeTypeSpinner);
         storeEditText = (EditText) findViewById(R.id.storeEditText);
         mapButton = (Button) findViewById(R.id.mapButton);
         returnMainButton = (Button) findViewById(R.id.returnMainButton);
+        displayPlacesButton = (Button) findViewById(R.id.displayPlacesButton);
+
+        // Initialize place item
+
+        mPlaceItem = new PlaceItem();
+
+        //Initialize PlaceDbHelper and SQLiteDB
+
+        placeDbHelper = new PlaceDbHelper(getApplicationContext());
+        sqLiteDatabase = placeDbHelper.getReadableDatabase();
+
+        cursor = placeDbHelper.getPlaceItem(sqLiteDatabase);
+
+        // Initialize the Row Number
+
+        mRowNumber = 0;
+
+        if(cursor.moveToFirst()) {
+
+            do {
+
+                int place_ID;
+                double latitude, longitude;
+                String name_address;
+
+                // These corresponds to the columns in the videoDbHelper: video_ID (column 0),
+                // rank (col. 1), title (col. 2), author (col. 3), and year (col. 4)
+
+                // See below:
+
+                /*
+                private static final String CREATE_QUERY = "CREATE TABLE " + VideoListDB.NewVideoItem.TABLE_NAME +
+                "(" + VideoListDB.NewVideoItem.VIDEO_ID + " TEXT," +
+                VideoListDB.NewVideoItem.RANK + " INTEGER," +
+                VideoListDB.NewVideoItem.TITLE + " TEXT," +
+                VideoListDB.NewVideoItem.AUTHOR + " TEXT," +
+                VideoListDB.NewVideoItem.YEAR + " INTEGER);"; */
+
+                place_ID = cursor.getInt(0);
+                latitude = cursor.getDouble(1);
+                longitude = cursor.getDouble(2);
+                name_address = cursor.getString(3);
+
+                mPlaceItem = new PlaceItem(place_ID, latitude, longitude, name_address);
+
+                mPlaceList.addPlaceItem(mPlaceItem, mRowNumber);
+
+                mRowNumber++;
+
+            }
+
+            while (cursor.moveToNext());
+
+        }
 
         ArrayAdapter<String> stringArrayAdapter =
                 new ArrayAdapter<String>(this,
@@ -119,6 +190,26 @@ public class LocatorActivity extends ActionBarActivity {
             public void onClick(View v) {
 
                 finish();
+
+            }
+        });
+
+        displayPlacesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(LocatorActivity.this, DisplayPlaceActivity.class);
+
+                // Next, I will pass in the array of place items, mPlaceList, a Placelist object
+                // to DisplayPlaceActivity.java
+
+                // Get the last value of mRowNumber stored in SharedPreferences file
+
+                intent.putExtra(getString(R.string.ROW_NUMBER), mRowNumber);
+
+                intent.putExtra(getString(R.string.PLACE_LIST), mPlaceList.mPlaceItem);
+
+                startActivity(intent);
 
             }
         });

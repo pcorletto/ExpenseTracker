@@ -1,6 +1,8 @@
 package com.example.android.expensetracker.model;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import com.example.android.expensetracker.R;
 
@@ -65,7 +67,7 @@ public class PlaceItemAdapter extends ArrayAdapter <PlaceItem> {
 
             holder = new ViewHolder();
             holder.checkBox = (CheckBox) convertView.findViewById(R.id.placeCheckBox);
-            holder.nameAddressListLabel = (TextView) convertView.findViewById(R.id.nameAddressListLabel);
+            holder.nameAddressListLabel = (EditText) convertView.findViewById(R.id.nameAddressListLabel);
             holder.mapListButton = (Button) convertView.findViewById(R.id.mapListButton);
 
             convertView.setTag(holder);
@@ -99,11 +101,17 @@ public class PlaceItemAdapter extends ArrayAdapter <PlaceItem> {
                 // activity called PlayVideoActivity, which contains
                 // a YouTube player
 
-                // Intent intent = new Intent(mContext, MAP ACTIVITY, WHATEVER IT IS);
+                // I adapted the following block of code from this
+                // SOURCE: http://stackoverflow.com/questions/13053352/
+                // android-how-to-launch-google-map-intent-in-android-app-with-certain-location
 
-                //intent.putExtra(R.string.PLACE_ID, holder.placeID);
-
-                //mContext.startActivity(intent);
+                String uriBegin = "geo:" + holder.latitude + "," + holder.longitude;
+                String query = holder.latitude + "," + holder.longitude + "(" + holder.nameAddress + ")";
+                String encodedQuery = Uri.encode(query);
+                String uriString = uriBegin + "?q=" + encodedQuery + "&z=16";
+                Uri uri = Uri.parse(uriString);
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, uri);
+                getContext().startActivity(intent);
 
             }
 
@@ -148,7 +156,7 @@ public class PlaceItemAdapter extends ArrayAdapter <PlaceItem> {
         double latitude, longitude;
 
         CheckBox checkBox;
-        TextView nameAddressListLabel;
+        EditText nameAddressListLabel;
         Button mapListButton;
 
     }

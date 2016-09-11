@@ -78,6 +78,12 @@
             android:layout_height="wrap_content"
             android:text="@string/return_main_button_label"
             android:id="@+id/returnMainButton"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/view_display_options_btn"
+            android:id="@+id/displayPlacesButton"/>
     </LinearLayout>
 
 </RelativeLayout>

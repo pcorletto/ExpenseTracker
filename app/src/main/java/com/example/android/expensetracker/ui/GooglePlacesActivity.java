@@ -4,6 +4,8 @@ package com.example.android.expensetracker.ui;
 // http://javapapers.com/android/find-places-nearby-in-google-maps-using-google-places-apiandroid-app/
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -16,6 +18,9 @@ import android.widget.Toast;
 
 import com.example.android.expensetracker.R;
 import com.example.android.expensetracker.model.GooglePlacesReadTask;
+import com.example.android.expensetracker.model.PlaceDbHelper;
+import com.example.android.expensetracker.model.PlaceItem;
+import com.example.android.expensetracker.model.PlaceList;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -38,6 +43,16 @@ import java.net.URL;
 
 public class GooglePlacesActivity extends FragmentActivity implements LocationListener {
 
+    // Data structures
+
+    private PlaceItem mPlaceItem;
+    private int mRowNumber;
+    private PlaceList mPlaceList = new PlaceList();
+
+    PlaceDbHelper placeDbHelper;
+    SQLiteDatabase sqLiteDatabase;
+    Cursor cursor;
+
     private static final String GOOGLE_API_KEY = "";
     GoogleMap googleMap;
     double currentLatitude = 0;
@@ -59,6 +74,8 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_google_places);
+
+        mRowNumber = 0;
 
         previousActivityButton = (Button) findViewById(R.id.previousActivityButton);
         returnMainActivityBtn = (Button) findViewById(R.id.returnMainActivityBtn);
@@ -100,10 +117,62 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
         toPass[1] = googlePlacesUrl.toString();
         googlePlacesReadTask.execute(toPass);
 
-        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        // Initialize place item
+
+        mPlaceItem = new PlaceItem();
+
+        //Initialize PlaceDbHelper and SQLiteDB
+
+        placeDbHelper = new PlaceDbHelper(getApplicationContext());
+        sqLiteDatabase = placeDbHelper.getReadableDatabase();
+
+        cursor = placeDbHelper.getPlaceItem(sqLiteDatabase);
+
+        // Initialize the Row Number
+
+        mRowNumber = 0;
+
+        if(cursor.moveToFirst()) {
+
+            do {
+
+                int place_ID;
+                double latitude, longitude;
+                String name_address;
+
+                // These corresponds to the columns in the videoDbHelper: video_ID (column 0),
+                // rank (col. 1), title (col. 2), author (col. 3), and year (col. 4)
+
+                // See below:
+
+                /*
+                private static final String CREATE_QUERY = "CREATE TABLE " + VideoListDB.NewVideoItem.TABLE_NAME +
+                "(" + VideoListDB.NewVideoItem.VIDEO_ID + " TEXT," +
+                VideoListDB.NewVideoItem.RANK + " INTEGER," +
+                VideoListDB.NewVideoItem.TITLE + " TEXT," +
+                VideoListDB.NewVideoItem.AUTHOR + " TEXT," +
+                VideoListDB.NewVideoItem.YEAR + " INTEGER);"; */
+
+                place_ID = cursor.getInt(0);
+                latitude = cursor.getDouble(1);
+                longitude = cursor.getDouble(2);
+                name_address = cursor.getString(3);
+
+                mPlaceItem = new PlaceItem(place_ID, latitude, longitude, name_address);
+
+                mPlaceList.addPlaceItem(mPlaceItem, mRowNumber);
+
+                mRowNumber++;
+
+            }
+
+            while (cursor.moveToNext());
+
+        }
+
+            googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-
 
 
                 storeNameAddress = marker.getTitle().toString();
@@ -143,6 +212,26 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
 
                 Intent intent = new Intent(GooglePlacesActivity.this, MainActivity.class);
                 startActivity(intent);
+
+            }
+        });
+
+        displayPlacesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(GooglePlacesActivity.this, DisplayPlaceActivity.class);
+
+                // Next, I will pass in the array of place items, mPlaceList, a Placelist object
+                // to DisplayPlaceActivity.java
+
+
+                intent.putExtra(getString(R.string.ROW_NUMBER), mRowNumber);
+
+                intent.putExtra(getString(R.string.PLACE_LIST), mPlaceList.mPlaceItem);
+
+                startActivity(intent);
+
 
             }
         });
