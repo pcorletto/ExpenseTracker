@@ -87,6 +87,15 @@
             android:parentActivityName=".ui.LocatorActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.expensetracker.ui.LocatorActivity" />
+        </activity>
+
+        <activity
+            android:name=".ui.StorePlaceActivity"
+            android:label="@string/title_activity_store_place"
+            android:parentActivityName=".ui.GooglePlacesActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.android.expensetracker.ui.GooglePlacesActivity" />
         </activity>
     </application>

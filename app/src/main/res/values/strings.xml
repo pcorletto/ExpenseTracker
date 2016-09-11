@@ -37,6 +37,7 @@
     <string name="title_activity_display_date">DisplayByDateActivity</string>
     <string name="EXPENSE_LIST">EXPENSE_LIST</string>
     <string name="EXPENSE_ID">EXPENSE_ID</string>
+    <string name="PLACE_ID">PLACE_ID</string>
     <string name="ROW_NUMBER">ROW_NUMBER</string>
     <string name="ET_PREF_FILE">ET_PREF_FILE</string>
     <string name="no_expense_prompt">There are no expenses to display!</string>
@@ -71,5 +72,12 @@
     <string name="label_btn_find">Find</string>
     <string name="next_btn_lbl">Next</string>
     <string name="store_name">store_name</string>
+    <string name="latitude">latitude</string>
+    <string name="longitude">longitude</string>
+    <string name="distance">distance</string>
+    <string name="title_activity_store_place">StorePlaceActivity</string>
+    <string name="store_place_activity_title">Would you save this place for later?</string>
+    <string name="name_address_textview_lbl">Name and address of place</string>
+    <string name="distance_label">Distance, in miles, to your current location</string>
 
 </resources>

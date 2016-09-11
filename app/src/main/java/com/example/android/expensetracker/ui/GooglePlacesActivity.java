@@ -35,7 +35,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.text.DecimalFormat;
 
 public class GooglePlacesActivity extends FragmentActivity implements LocationListener {
 
@@ -46,13 +45,14 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
     double destLatitude = 0;
     double destLongitude = 0;
     private int PROXIMITY_RADIUS = 5000;
-    String storeName;
+    String storeType;
+    String storeNameAddress;
     double distanceKms = 0;
     double distanceMiles = 0;
 
     String response;
 
-    private Button previousActivityButton, returnMainActivityBtn, storePlaceButton, displayPlacesButton;
+    private Button previousActivityButton, returnMainActivityBtn, displayPlacesButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,6 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
 
         previousActivityButton = (Button) findViewById(R.id.previousActivityButton);
         returnMainActivityBtn = (Button) findViewById(R.id.returnMainActivityBtn);
-        storePlaceButton = (Button) findViewById(R.id.storePlaceButton);
         displayPlacesButton = (Button) findViewById(R.id.displayPlacesButton);
 
         //show error dialog if GooglePlayServices not available
@@ -71,9 +70,9 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
         }
 
         Intent intent = getIntent();
-        storeName = intent.getStringExtra(getString(R.string.store_name));
+        storeType = intent.getStringExtra(getString(R.string.store_name));
 
-        storeName = storeName.replaceAll(" ", "%20");
+        storeType = storeType.replaceAll(" ", "%20");
 
         SupportMapFragment fragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.googleMap);
         googleMap = fragment.getMap();
@@ -87,11 +86,11 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
         }
         locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
 
-        Toast.makeText(GooglePlacesActivity.this, storeName, Toast.LENGTH_LONG).show();
+        Toast.makeText(GooglePlacesActivity.this, storeType, Toast.LENGTH_LONG).show();
         StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
         googlePlacesUrl.append("location=" + currentLatitude + "," + currentLongitude);
         googlePlacesUrl.append("&radius=" + PROXIMITY_RADIUS);
-        googlePlacesUrl.append("&name=" + storeName);
+        googlePlacesUrl.append("&name=" + storeType);
         googlePlacesUrl.append("&sensor=true");
         googlePlacesUrl.append("&key=" + GOOGLE_API_KEY);
 
@@ -105,6 +104,10 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
             @Override
             public boolean onMarkerClick(Marker marker) {
 
+
+
+                storeNameAddress = marker.getTitle().toString();
+
                 destLatitude = marker.getPosition().latitude;
 
                 destLongitude = marker.getPosition().longitude;
@@ -112,10 +115,14 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
                 distanceMiles = getDistance(currentLatitude, currentLongitude, destLatitude,
                         destLongitude);
 
-                DecimalFormat df = new DecimalFormat("#.#");
+                Intent intent = new Intent(GooglePlacesActivity.this, StorePlaceActivity.class);
 
-                Toast.makeText(GooglePlacesActivity.this, marker.getTitle().toString() +
-                        "\n" + df.format(distanceMiles) + " miles away." , Toast.LENGTH_LONG).show();
+                intent.putExtra(getString(R.string.store_name), storeNameAddress);
+                intent.putExtra(getString(R.string.latitude), destLatitude);
+                intent.putExtra(getString(R.string.longitude), destLongitude);
+                intent.putExtra(getString(R.string.distance), distanceMiles);
+
+                startActivity(intent);
 
                 return true;
             }
