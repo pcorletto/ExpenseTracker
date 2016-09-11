@@ -142,6 +142,8 @@ public class DisplayPlaceActivity extends AppCompatActivity {
 
                         Toast.makeText(getApplicationContext(), "Place item deleted", Toast.LENGTH_LONG).show();
 
+                        finish();
+
 
                     } else {
 

@@ -144,6 +144,8 @@ public class DisplayByDateActivity extends AppCompatActivity {
 
                         holder.totalExpenseEditText.setText(df.format(totalExpense));
 
+                        finish();
+
 
                     } else {
 
