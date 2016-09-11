@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout1"
+        android:background="@android:color/holo_orange_light">
+
+    <CheckBox
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/placeCheckBox"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
+
+    <TextView
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/nameAddressListLabel"
+        android:gravity="center_horizontal"
+        android:inputType="textMultiLine"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:text="@string/map_button_label"
+        android:id="@+id/mapListButton"
+        android:background="@android:color/holo_green_light"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

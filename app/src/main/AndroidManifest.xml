@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.android.expensetracker" >
+    package="com.example.android.expensetracker" >
 
     <permission
         android:name="com.example.android.expensetracker.permission.MAPS_RECEIVE"
@@ -79,7 +79,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value=""/>
+            android:value="" />
 
         <activity
             android:name=".ui.GooglePlacesActivity"
@@ -89,7 +89,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.android.expensetracker.ui.LocatorActivity" />
         </activity>
-
         <activity
             android:name=".ui.StorePlaceActivity"
             android:label="@string/title_activity_store_place"
@@ -97,6 +96,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.android.expensetracker.ui.GooglePlacesActivity" />
+        </activity>
+        <activity
+            android:name=".ui.DisplayPlaceActivity"
+            android:label="@string/title_activity_display_place"
+            android:parentActivityName=".ui.StorePlaceActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.expensetracker.ui.StorePlaceActivity" />
         </activity>
     </application>
 

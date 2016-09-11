@@ -28,6 +28,7 @@
     <string name="misc_radio_btn">Misc./Other</string>
     <string name="clear_button">Clear</string>
     <string name="store_expense_btn">Store</string>
+    <string name="delete_place_btn">Delete</string>
     <string name="pick_store_spinner_lbl">Pick a store</string>
     <string name="title_activity_store">StoreActivity</string>
     <string name="title_activity_display_grocery">DisplayByGroceryActivity</string>
@@ -36,11 +37,13 @@
     <string name="title_activity_display_donations">DisplayByDonationsActivity</string>
     <string name="title_activity_display_date">DisplayByDateActivity</string>
     <string name="EXPENSE_LIST">EXPENSE_LIST</string>
+    <string name="PLACE_LIST">PLACE_LIST</string>
     <string name="EXPENSE_ID">EXPENSE_ID</string>
     <string name="PLACE_ID">PLACE_ID</string>
     <string name="ROW_NUMBER">ROW_NUMBER</string>
     <string name="ET_PREF_FILE">ET_PREF_FILE</string>
     <string name="no_expense_prompt">There are no expenses to display!</string>
+    <string name="no_place_prompt">There are no places to display!</string>
     <string name="return_main_button_label">Main</string>
     <string name="delete_selected_expenses_button">Delete</string>
     <string name="title_activity_display_options">DisplayOptionsActivity</string>
@@ -79,5 +82,6 @@
     <string name="store_place_activity_title">Would you save this place for later?</string>
     <string name="name_address_textview_lbl">Name and address of place</string>
     <string name="distance_label">Distance, in miles, to your current location</string>
+    <string name="title_activity_display_place">DisplayPlaceActivity</string>
 
 </resources>

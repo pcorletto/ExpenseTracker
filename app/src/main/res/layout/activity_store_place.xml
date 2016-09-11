@@ -1,0 +1,96 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                tools:context="com.example.android.expensetracker.ui.StorePlaceActivity">
+
+    <TextView
+        android:text="@string/store_place_activity_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activityTitle"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/name_address_textview_lbl"
+        android:id="@+id/nameAddressLabel"
+        android:layout_below="@+id/activityTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="49dp"
+        android:textSize="20dp"
+        android:gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/nameAddressTextView"
+        android:layout_below="@+id/nameAddressLabel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:inputType="textMultiLine"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonLayout2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:layout_width="85dp"
+            android:layout_height="match_parent"
+            android:text="@string/return_previous_lbl"
+            android:id="@+id/previousActivityButton"
+            android:textSize="12sp"/>
+
+        <Button
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:text="@string/return_main_button_label"
+            android:id="@+id/returnMainActivityBtn"/>
+
+        <Button
+            android:layout_width="65dp"
+            android:layout_height="match_parent"
+            android:text="@string/store_expense_btn"
+            android:id="@+id/storePlaceButton"
+            android:textSize="12sp"/>
+
+        <Button
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:text="@string/view_display_options_btn"
+            android:id="@+id/displayPlacesButton"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/distance_label"
+        android:id="@+id/distanceLabel"
+        android:layout_below="@+id/nameAddressTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/distanceTextView"
+        android:layout_below="@+id/distanceLabel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+</RelativeLayout>
