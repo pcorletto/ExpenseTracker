@@ -19,7 +19,7 @@ android {
     }
 
     buildTypes.each {
-        it.buildConfigField 'String', 'GOOGLE_API_KEY', '"AIzaSyAnMVUGjMdnHy5WB_khQ2lFv_38hWJch94"'
+        it.buildConfigField 'String', 'GOOGLE_API_KEY', '""'
     }
 
 }
