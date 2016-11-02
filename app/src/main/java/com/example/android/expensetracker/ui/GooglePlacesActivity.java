@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.android.expensetracker.BuildConfig;
 import com.example.android.expensetracker.R;
 import com.example.android.expensetracker.model.GooglePlacesReadTask;
 import com.example.android.expensetracker.model.PlaceDbHelper;
@@ -53,7 +54,6 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
     SQLiteDatabase sqLiteDatabase;
     Cursor cursor;
 
-    private static final String GOOGLE_API_KEY = "";
     GoogleMap googleMap;
     double currentLatitude = 0;
     double currentLongitude = 0;
@@ -109,7 +109,7 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
         googlePlacesUrl.append("&radius=" + PROXIMITY_RADIUS);
         googlePlacesUrl.append("&name=" + storeType);
         googlePlacesUrl.append("&sensor=true");
-        googlePlacesUrl.append("&key=" + GOOGLE_API_KEY);
+        googlePlacesUrl.append("&key=" + BuildConfig.GOOGLE_API_KEY);
 
         GooglePlacesReadTask googlePlacesReadTask = new GooglePlacesReadTask();
         Object[] toPass = new Object[2];

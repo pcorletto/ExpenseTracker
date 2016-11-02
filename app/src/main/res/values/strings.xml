@@ -64,6 +64,7 @@
     <string name="receipt_tracker_button">EXPENSE TRACKER</string>
     <string name="empty_expense_amount_alert">Please enter an expense amount!</string>
     <string name="empty_description_alert">Please enter a description!</string>
+    <string name="empty_category_alert">Please select a category!</string>
     <string name="title_activity_locator">LocatorActivity</string>
     <string name="locator_activity_title">Nearest Store Locator</string>
     <string name="locator_activity_subtitle">Pick the type of store</string>

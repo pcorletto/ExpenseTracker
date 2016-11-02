@@ -34,7 +34,7 @@ public class LocatorActivity extends ActionBarActivity {
 
     // String array to hold the store names to pick from
     private String[] storeType = {"Pick a store type ...", "Pharmacy", "Supermarket", "Gas", "Clothing",
-            "Restaurant", "Auto", "Laundry"};
+            "Restaurant", "Auto", "Laundry", "Hardware", "Electronics"};
 
     // Member variables
 

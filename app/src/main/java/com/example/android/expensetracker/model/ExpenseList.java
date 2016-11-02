@@ -19,12 +19,24 @@ public class ExpenseList {
 
     }
 
-    public String getExpenseItem(int i){
+    public ExpenseItem getExpenseItem(int i){
 
-        return mExpenseItem[i].getDate() +
-                " " + mExpenseItem[i].getExpenseAmount() +
-                " " + mExpenseItem[i].getCategory() +
-                "\n\n";
+        return mExpenseItem[i];
+    }
+
+    public String getExpenseItemDate(int i){
+
+        return mExpenseItem[i].getDate();
+    }
+
+    public double getExpenseItemAmount(int i){
+
+        return mExpenseItem[i].getExpenseAmount();
+    }
+
+    public String getExpenseItemCategory(int i){
+
+        return mExpenseItem[i].getCategory();
     }
 
 }

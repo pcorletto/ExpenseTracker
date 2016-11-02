@@ -79,7 +79,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="" />
+            android:value="AIzaSyDW1M7RA9Oq4CmW_cYbPl8o604wjGRpX_A" />
 
         <activity
             android:name=".ui.GooglePlacesActivity"

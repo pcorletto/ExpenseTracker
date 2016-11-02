@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.android.expensetracker"
-        minSdkVersion 14
+        minSdkVersion 21
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -17,6 +17,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildTypes.each {
+        it.buildConfigField 'String', 'GOOGLE_API_KEY', '"AIzaSyDW1M7RA9Oq4CmW_cYbPl8o604wjGRpX_A"'
+    }
+
 }
 
 dependencies {

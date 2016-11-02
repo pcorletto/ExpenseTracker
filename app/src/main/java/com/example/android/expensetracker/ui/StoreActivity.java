@@ -10,15 +10,19 @@ import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -46,6 +50,7 @@ public class StoreActivity extends ActionBarActivity {
 
     private EditText amountEditText, descriptionEditText;
     private Button storeButton, clearButton, displayButton, returnMainBtn;
+    private Toolbar toolbar;
     public static final String TAG = StoreActivity.class.getSimpleName();
 
     // Data structures
@@ -62,7 +67,7 @@ public class StoreActivity extends ActionBarActivity {
     // String array to hold the store names to pick from
     private String[] storeSelection = {"Walmart","Sedanos", "Publix", "Tropical", "Aldi",
             "Winn Dixie", "BJ Wholesale Club", "Other Supermarket", "Dollar Tree", "Dee Dee Discount",
-            "CVS", "Walgreens", "Rite Aid", "McDonalds", "Burger King", "Wendys", "Subways",
+            "CVS", "Walgreens", "Rite Aid", "Kmart", "McDonalds", "Burger King", "Wendys", "Subways",
             "Pollo Tropical", "Other Restaurant", "City of Homestead", "Metro PCS", "Molina Health Care", "Wells Fargo",
             "Suntrust", "MoneyGram", "Church", "Badcock Furniture", "Brandsmart",
             "Current Landlord", "Office Max", "RaceTrac", "Shell", "Other Gas Station", "Sun Pass", "Mechanic",
@@ -136,9 +141,31 @@ public class StoreActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store);
+
         ArrayAdapter<String> stringArrayAdapter =
                 new ArrayAdapter<String>(this,
                         android.R.layout.simple_spinner_dropdown_item, storeSelection);
+
+
+
+        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationIcon(R.drawable.ic_back);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.ColorPrimaryDark));
+        }
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                finish();
+            }
+        });
 
         amountEditText = (EditText) findViewById(R.id.amountEditText);
         descriptionEditText = (EditText) findViewById(R.id.descriptionEditText);
@@ -193,7 +220,7 @@ public class StoreActivity extends ActionBarActivity {
                 String expenseAmountString = amountEditText.getText().toString();
 
                 // Check if the user did not enter anything. If no entry, then alert
-                if(TextUtils.isEmpty(expenseAmountString)){
+                if (TextUtils.isEmpty(expenseAmountString)) {
                     amountEditText.setError(getString(R.string.empty_expense_amount_alert));
                     ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
                     toneG.startTone(ToneGenerator.TONE_SUP_CONGESTION, 200);
@@ -203,20 +230,34 @@ public class StoreActivity extends ActionBarActivity {
                 String descriptionString = descriptionEditText.getText().toString();
 
                 // Check if the user did not enter anything. If no entry, then alert
-                if(TextUtils.isEmpty(descriptionString)){
+                if (TextUtils.isEmpty(descriptionString)) {
                     descriptionEditText.setError(getString(R.string.empty_description_alert));
                     ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
                     toneG.startTone(ToneGenerator.TONE_SUP_CONGESTION, 200);
                     return;
                 }
 
+                if ((group1.getCheckedRadioButtonId() == -1) && (group2.getCheckedRadioButtonId() == -1)) {
+                    // If neither radiobutton group is checked, alert user to check at least one
+                    // category
 
-                addItem(v);
+                    Toast.makeText(StoreActivity.this, getString(R.string.empty_category_alert),
+                            Toast.LENGTH_LONG).show();
+                    ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
+                    toneG.startTone(ToneGenerator.TONE_SUP_CONGESTION, 200);
+                    return;
 
-                // Play a beeping sound once the expense is successfully stored.
+                } else {
 
-                ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
-                toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
+
+                    addItem(v);
+
+                    // Play a beeping sound once the expense is successfully stored.
+
+                    ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
+                    toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
+
+                }
 
             }
         });

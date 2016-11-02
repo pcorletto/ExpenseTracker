@@ -18,12 +18,24 @@ public class PlaceList {
 
     }
 
-    public String getPlaceItem(int i){
-        return mPlaceItem[i].getNameAddress() +
-                " (" + mPlaceItem[i].getLatitude()+ "\n\n" +
-                ", " + mPlaceItem[i].getLongitude();
+    public PlaceItem getPlaceItem(int i){
+        return mPlaceItem[i];
 
     }
 
+    public String getPlaceItemNameAddress(int i){
+        return mPlaceItem[i].getNameAddress();
+
+    }
+
+    public double getPlaceItemLatitude(int i){
+        return mPlaceItem[i].getLatitude();
+
+    }
+
+    public double getPlaceItemLongitude(int i){
+        return mPlaceItem[i].getLongitude();
+
+    }
 
 }
