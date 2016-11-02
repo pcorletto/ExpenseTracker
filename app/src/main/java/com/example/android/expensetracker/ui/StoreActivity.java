@@ -254,6 +254,8 @@ public class StoreActivity extends ActionBarActivity {
 
                     // Play a beeping sound once the expense is successfully stored.
 
+                    Toast.makeText(StoreActivity.this, "Stored!", Toast.LENGTH_LONG).show();
+
                     ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
                     toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
 

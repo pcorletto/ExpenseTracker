@@ -139,7 +139,7 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
                 int place_ID;
                 double latitude, longitude;
                 String name_address;
-                
+
                 place_ID = cursor.getInt(0);
                 latitude = cursor.getDouble(1);
                 longitude = cursor.getDouble(2);
