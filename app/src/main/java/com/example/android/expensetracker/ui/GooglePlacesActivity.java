@@ -139,20 +139,7 @@ public class GooglePlacesActivity extends FragmentActivity implements LocationLi
                 int place_ID;
                 double latitude, longitude;
                 String name_address;
-
-                // These corresponds to the columns in the videoDbHelper: video_ID (column 0),
-                // rank (col. 1), title (col. 2), author (col. 3), and year (col. 4)
-
-                // See below:
-
-                /*
-                private static final String CREATE_QUERY = "CREATE TABLE " + VideoListDB.NewVideoItem.TABLE_NAME +
-                "(" + VideoListDB.NewVideoItem.VIDEO_ID + " TEXT," +
-                VideoListDB.NewVideoItem.RANK + " INTEGER," +
-                VideoListDB.NewVideoItem.TITLE + " TEXT," +
-                VideoListDB.NewVideoItem.AUTHOR + " TEXT," +
-                VideoListDB.NewVideoItem.YEAR + " INTEGER);"; */
-
+                
                 place_ID = cursor.getInt(0);
                 latitude = cursor.getDouble(1);
                 longitude = cursor.getDouble(2);
